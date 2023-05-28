@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
-use App\Models\User;
+use App\Http\Controllers\VerifyEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +21,4 @@ Route::get('/', function () {
 
 Route::get('/swagger', fn () => App::isProduction() ? response(status: 403) : view('swagger'))->name('swagger');
 
-Route::get('/email/verify/{id}/{hash}', function (string $id) {
-	$user = User::find($id);
-	$user->markEmailAsVerified();
-	$redirectUrl = 'http://localhost:5173/success-verify';
-	return redirect()->away($redirectUrl);
-})->middleware('signed')->name('emails.confirmation');
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'confirmation'])->middleware(['signed'])->name('emails.confirmation');
