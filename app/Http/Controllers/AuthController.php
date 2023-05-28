@@ -40,6 +40,11 @@ class AuthController extends Controller
 			Mail::to($user->email)->send(new VerifyEmail($user, $this->generateVerificationUrl($user)));
 		}
 
+		if ($checkUser && $checkUser->hasVerifiedEmail()) {
+			$redirectUrl = 'http://localhost:5173/';
+			return redirect()->away($redirectUrl);
+		}
+
 		$redirectUrl = 'http://localhost:5173/success-registration';
 		return redirect()->away($redirectUrl);
 	}
