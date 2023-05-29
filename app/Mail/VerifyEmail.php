@@ -16,7 +16,7 @@ class VerifyEmail extends Mailable
 		$this->verificationUrl = $verificationUrl;
 	}
 
-	public function build()
+	public function build(): Mailable
 	{
 		return $this->subject('Verify Your Email')
 				->view('email.confirmation', [
