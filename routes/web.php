@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
-use App\Http\Controllers\VerifyEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +19,3 @@ Route::get('/', function () {
 });
 
 Route::get('/swagger', fn () => App::isProduction() ? response(status: 403) : view('swagger'))->name('swagger');
-
-Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'confirmation'])->middleware(['signed'])->name('emails.confirmation');

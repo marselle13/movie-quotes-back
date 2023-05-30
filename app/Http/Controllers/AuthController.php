@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\ResendLinkRequest;
 use App\Mail\VerifyEmail;
 use App\Models\User;
 use Google\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -20,7 +18,7 @@ class AuthController extends Controller
 	{
 		$user = User::create($request->validated() + ['uuid' => Str::uuid()]);
 
-		Mail::to($user->email)->send(new VerifyEmail($user, $this->generateVerificationUrl($user)));
+		Mail::to($user->email)->send(new VerifyEmail($user, VerifyEmailController::generateVerificationUrl($user)));
 
 		return response()->json('User created', 201);
 	}
@@ -34,39 +32,17 @@ class AuthController extends Controller
 
 	public function callbackFromGoogle(Request $request): JsonResponse
 	{
-		$token = $request->query('code');
+		$token = $request->code;
 		$accessToken = $this->exchangeGoogleAuthorizationCode($token);
 		$user = Socialite::driver('google')->stateless()->userFromToken($accessToken);
 		$checkUser = User::where('email', $user->email)->first();
 		if (!$checkUser) {
 			$user = User::create(['name' => $user->name, 'email'=>$user->email, 'uuid'=> Str::uuid()]);
 			$user->markEmailAsVerified();
+			return response()->json('User Created', 201);
+		} else {
 			return response()->json('User Already Exists', 409);
 		}
-
-		return response()->json('User Created', 201);
-	}
-
-	public function resendLink(ResendLinkRequest $request): JsonResponse
-	{
-		$user = User::where('uuid', $request->validated())->first();
-
-		if ($user->hasVerifiedEmail()) {
-			return response()->json('Email already verified', 404);
-		}
-
-		Mail::to($user->email)->send(new VerifyEmail($user, $this->generateVerificationUrl($user)));
-
-		return response()->json('Verification link sand', 200);
-	}
-
-	protected function generateVerificationUrl($user): string
-	{
-		return URL::temporarySignedRoute(
-			'emails.confirmation',
-			now()->addDay(),
-			['id' => $user->id, 'hash' => sha1($user->email)]
-		);
 	}
 
 	private function exchangeGoogleAuthorizationCode($authorizationCode): string
