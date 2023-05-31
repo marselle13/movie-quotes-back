@@ -17,7 +17,6 @@ class AuthController extends Controller
 	public function register(RegisterRequest $request): JsonResponse
 	{
 		$user = User::create($request->except('password_confirmation'));
-
 		Mail::to($user->email)->send(new VerifyEmail($user, VerifyEmailController::generateVerificationUrl($user)));
 
 		return response()->json(['User created'], 201);
@@ -33,7 +32,7 @@ class AuthController extends Controller
 	public function callbackFromGoogle(Request $request): JsonResponse
 	{
 		$token = $request->code;
-		$accessToken = $this->exchangeGoogleAuthorizationCode($token);
+		$accessToken = $this->getGoogleAccessToken($token);
 		$user = Socialite::driver('google')->stateless()->userFromToken($accessToken);
 		$checkUser = User::where('email', $user->email)->first();
 		if (!$checkUser) {
@@ -45,7 +44,7 @@ class AuthController extends Controller
 		}
 	}
 
-	private function exchangeGoogleAuthorizationCode($authorizationCode): string
+	private function getGoogleAccessToken($authorizationCode): string
 	{
 		$client = new Client();
 		$client->setClientId(env('GOOGLE_CLIENT_ID'));
