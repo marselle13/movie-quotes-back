@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
-use App\Mail\VerifyEmail;
 use App\Models\User;
 use Google\Client;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
@@ -16,11 +14,11 @@ class AuthController extends Controller
 {
 	public function register(RegisterRequest $request): JsonResponse
 	{
-		$user = User::create($request->validated() + ['uuid' => Str::uuid()]);
+		User::create($request->except('password_confirmation'));
 
-		Mail::to($user->email)->send(new VerifyEmail($user, VerifyEmailController::generateVerificationUrl($user)));
+		//		Mail::to($user->email)->send(new VerifyEmail($user, VerifyEmailController::generateVerificationUrl($user)));
 
-		return response()->json('User created', 201);
+		return response()->json(['User created'], 201);
 	}
 
 	public function redirectToGoogle(): JsonResponse

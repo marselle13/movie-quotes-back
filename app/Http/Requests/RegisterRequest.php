@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterRequest extends FormRequest
 {
@@ -18,5 +20,16 @@ class RegisterRequest extends FormRequest
 			'email'    => 'required|email|unique:users,email',
 			'password' => 'required|min:8|max:15|lowercase|alpha_num|confirmed',
 		];
+	}
+
+	/*
+	 * Handle a passed validation attempt.
+	 */
+	protected function passedValidation(): void
+	{
+		$this->merge([
+			'uuid'     => Str::uuid(),
+			'password' => Hash::make($this->password),
+		]);
 	}
 }
