@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 
 class RegisterRequest extends FormRequest
 {
@@ -29,7 +28,7 @@ class RegisterRequest extends FormRequest
 	{
 		$this->merge([
 			'uuid'     => Str::uuid(),
-			'password' => Hash::make($this->password),
+			'password' => bcrypt($this->password),
 		]);
 	}
 }

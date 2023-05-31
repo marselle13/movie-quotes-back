@@ -6,17 +6,19 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Google\Client;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use App\Mail\VerifyEmail;
 
 class AuthController extends Controller
 {
 	public function register(RegisterRequest $request): JsonResponse
 	{
-		User::create($request->except('password_confirmation'));
+		$user = User::create($request->except('password_confirmation'));
 
-		//		Mail::to($user->email)->send(new VerifyEmail($user, VerifyEmailController::generateVerificationUrl($user)));
+		Mail::to($user->email)->send(new VerifyEmail($user, VerifyEmailController::generateVerificationUrl($user)));
 
 		return response()->json(['User created'], 201);
 	}
