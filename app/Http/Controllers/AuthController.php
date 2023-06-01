@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Google\Client;
@@ -22,6 +23,19 @@ class AuthController extends Controller
 		return response()->json(['User created'], 201);
 	}
 
+	public function login(LoginRequest $request): JsonResponse
+	{
+		$user = User::where('name', $request->username_email)
+			->orWhere('email', $request->username_email)->first();
+		$credentials['email'] = $user?->email;
+		$credentials['password'] = $request->password;
+		if (auth()->attempt($credentials)) {
+			$request->session()->regenerate();
+			return response()->json('User Logged in', 200);
+		}
+		return response()->json('Invalid Credentials', 401);
+	}
+
 	public function redirectToGoogle(): JsonResponse
 	{
 		$redirectUrl = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
@@ -33,15 +47,16 @@ class AuthController extends Controller
 	{
 		$token = $request->code;
 		$accessToken = $this->getGoogleAccessToken($token);
-		$user = Socialite::driver('google')->stateless()->userFromToken($accessToken);
-		$checkUser = User::where('email', $user->email)->first();
-		if (!$checkUser) {
-			$user = User::create(['name' => $user->name, 'email'=>$user->email, 'uuid'=> Str::uuid()]);
+		$google = Socialite::driver('google')->stateless()->userFromToken($accessToken);
+		$user = User::where('email', $google->email)->first();
+		if (!$user) {
+			$user = User::create(['name' => $google->name, 'email'=>$google->email, 'uuid'=> Str::uuid()]);
 			$user->markEmailAsVerified();
-			return response()->json('User Created', 201);
-		} else {
-			return response()->json('User Already Exists', 409);
 		}
+		auth()->login($user);
+
+		$request->session()->regenerate();
+		return response()->json('User Logged in', 200);
 	}
 
 	private function getGoogleAccessToken($authorizationCode): string
