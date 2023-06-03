@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
@@ -35,9 +34,6 @@ class ResetPasswordController extends Controller
 	public function updatePassword(UpdatePasswordRequest $request): JsonResponse
 	{
 		$user = User::where('uuid', $request->uuid)->first();
-		if (Hash::check($request->password, $user->password)) {
-			return response()->json('Same Password', 400);
-		}
 		$user->update(['password' => bcrypt($request->password)]);
 		$cookie = cookie()->forget('reset_password_token');
 		return response()->json('Password Updated Successfully', 200)->withCookie($cookie);

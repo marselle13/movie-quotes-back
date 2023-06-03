@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\password;
 
+use App\Rules\SamePassword;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatePasswordRequest extends FormRequest
@@ -16,7 +17,7 @@ class UpdatePasswordRequest extends FormRequest
 		return [
 			'uuid'                       => 'required',
 			'hash'                       => 'required',
-			'password'                   => 'required|min:3|confirmed',
+			'password'                   => ['required', 'min:3', 'confirmed', new SamePassword],
 			'password_confirmation'      => 'required',
 		];
 	}

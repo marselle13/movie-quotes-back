@@ -31,4 +31,4 @@ Route::get('/email/confirmation', [VerifyEmailController::class, 'verifyEmail'])
 
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('passwords.reset');
 Route::get('/update-password', [ResetPasswordController::class, 'checkResetUrl'])->name('passwords.check-reset');
-Route::post('/update-password', [ResetPasswordController::class, 'updatePassword'])->name('passwords.update');
+Route::patch('/update-password', [ResetPasswordController::class, 'updatePassword'])->name('passwords.update');
