@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ResendLinkRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
 	/**
 	 * Get the validation rules that apply to the request.
@@ -14,7 +14,8 @@ class ResendLinkRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'uuid' => 'exists:users,uuid',
+			'username_email'    => 'required|min:3',
+			'password'          => 'required',
 		];
 	}
 }
