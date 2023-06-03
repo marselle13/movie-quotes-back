@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,10 @@ Route::post('/register', [AuthController::class, 'register'])->name('auth.regist
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('auth.redirect');
 Route::get('/auth/google/callback', [AuthController::class, 'callbackFromGoogle'])->name('auth.register_google');
-Route::post('/resend-link', [VerifyEmailController::class, 'resendLink'])->name('email.resend');
-Route::get('/email/confirmation', [VerifyEmailController::class, 'verifyEmail'])->name('email.verify');
+
+Route::post('/resend-link', [VerifyEmailController::class, 'resendLink'])->name('emails.resend');
+Route::get('/email/confirmation', [VerifyEmailController::class, 'verifyEmail'])->name('emails.verify');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('passwords.reset');
+Route::get('/update-password', [ResetPasswordController::class, 'checkResetUrl'])->name('passwords.check-reset');
+Route::post('/update-password', [ResetPasswordController::class, 'updatePassword'])->name('passwords.update');
