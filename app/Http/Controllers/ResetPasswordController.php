@@ -17,7 +17,7 @@ class ResetPasswordController extends Controller
 	{
 		$user = User::where('email', $request->email)->first();
 		$token = Str::random(32);
-		$cookie = cookie('reset_password_token', $token, 60);
+		$cookie = cookie('reset_password_token', $token, 120);
 		Mail::to($user->email)->send(new ResetPasswordMail($user, self::generateResetPasswordUrl($user)));
 		return response()->json('Reset password link sent', 200)->withCookie($cookie);
 	}
@@ -28,7 +28,7 @@ class ResetPasswordController extends Controller
 		if (!$user || $request->hash !== sha1($user->email) || !$request->cookie('reset_password_token')) {
 			return response()->json('Invalid reset password link', 400);
 		}
-		return response()->json(['message' => 'Correct reset password link'], 200);
+		return response()->json('Correct reset password link', 200);
 	}
 
 	public function updatePassword(UpdatePasswordRequest $request): JsonResponse
