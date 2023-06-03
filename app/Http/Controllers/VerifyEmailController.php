@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ResendLinkRequest;
+use App\Http\Requests\auth\ResendLinkRequest;
 use App\Mail\VerifyEmail;
 use App\Models\User;
 use Carbon\Carbon;

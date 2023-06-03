@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\auth\LoginRequest;
+use App\Http\Requests\auth\RegisterRequest;
+use App\Mail\VerifyEmail;
 use App\Models\User;
 use Google\Client;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
-use App\Mail\VerifyEmail;
 
 class AuthController extends Controller
 {
