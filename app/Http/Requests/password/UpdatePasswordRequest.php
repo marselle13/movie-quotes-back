@@ -15,10 +15,10 @@ class UpdatePasswordRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'uuid'                       => 'required',
-			'hash'                       => 'required',
-			'password'                   => ['required', 'min:3', 'confirmed', new SamePassword],
-			'password_confirmation'      => 'required',
+			'uuid'                        => 'required',
+			'token'                       => 'required',
+			'password'                    => ['required', 'min:3', 'confirmed', new SamePassword],
+			'password_confirmation'       => 'required',
 		];
 	}
 }

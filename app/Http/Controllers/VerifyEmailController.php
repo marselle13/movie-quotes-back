@@ -20,7 +20,6 @@ class VerifyEmailController extends Controller
 		}
 		$expiration = Carbon::createFromTimestamp($request->expires);
 		$isExpired = Carbon::now()->isAfter($expiration);
-
 		if ($isExpired) {
 			return response()->json('Token has expired', 410);
 		}
@@ -34,15 +33,13 @@ class VerifyEmailController extends Controller
 		if ($user->hasVerifiedEmail()) {
 			return response()->json('Email already verified', 409);
 		}
-
 		Mail::to($user->email)->send(new VerifyEmail($user, self::generateVerificationUrl($user)));
-
 		return response()->json('Verification link sent', 200);
 	}
 
 	public static function generateVerificationUrl($user): string
 	{
-		$expiration = Carbon::now()->addHours(2)->timestamp;
+		$expiration = Carbon::now()->addHours(env('VERIFY_EMAIL_TIME'))->timestamp;
 		return url(env('FRONT_APP') . '?uuid=' . $user->uuid . '&hash=' . sha1($user->email) . '&expires=' . $expiration);
 	}
 }
