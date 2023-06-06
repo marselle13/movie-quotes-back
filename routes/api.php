@@ -21,14 +21,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 	return $request->user();
 });
 
-Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
-Route::post('/login', [AuthController::class, 'login'])->name('auth.login')->middleware('checkUser');
-Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('auth.redirect');
-Route::get('/auth/google/callback', [AuthController::class, 'callbackFromGoogle'])->name('auth.register_google');
+Route::controller(AuthController::class)->group(function () {
+	Route::post('/register', 'register')->name('auth.register');
+	Route::post('/login', 'login')->name('auth.login')->middleware('checkUser');
+	Route::get('/auth/google/redirect', 'redirectToGoogle')->name('auth.redirect');
+	Route::get('/auth/google/callback', 'callbackFromGoogle')->name('auth.register_google');
+});
 
-Route::post('/resend-link', [VerifyEmailController::class, 'resendLink'])->name('emails.resend');
-Route::get('/email/confirmation', [VerifyEmailController::class, 'verifyEmail'])->name('emails.verify');
+Route::controller(VerifyEmailController::class)->group(function () {
+	Route::post('/resend-link', 'resendLink')->name('emails.resend');
+	Route::get('/email/confirmation', 'verifyEmail')->name('emails.verify');
+});
 
-Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('passwords.reset');
-Route::get('/update-password', [ResetPasswordController::class, 'checkResetUrl'])->name('passwords.check-reset');
-Route::patch('/update-password', [ResetPasswordController::class, 'updatePassword'])->name('passwords.update');
+Route::controller(ResetPasswordController::class)->group(function () {
+	Route::post('/reset-password', 'resetPassword')->name('passwords.reset');
+	Route::get('/update-password', 'checkResetUrl')->name('passwords.check-reset');
+	Route::patch('/update-password', 'updatePassword')->name('passwords.update');
+});

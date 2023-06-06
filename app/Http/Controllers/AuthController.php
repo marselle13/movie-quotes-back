@@ -19,7 +19,6 @@ class AuthController extends Controller
 	{
 		$user = User::create($request->except('password_confirmation'));
 		Mail::to($user->email)->send(new VerifyEmail($user, VerifyEmailController::generateVerificationUrl($user)));
-
 		return response()->json(['User created'], 201);
 	}
 
@@ -39,7 +38,6 @@ class AuthController extends Controller
 	public function redirectToGoogle(): JsonResponse
 	{
 		$redirectUrl = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
-
 		return response()->json(['redirect_url' => $redirectUrl], 200);
 	}
 
@@ -54,7 +52,6 @@ class AuthController extends Controller
 			$user->markEmailAsVerified();
 		}
 		auth()->login($user);
-
 		$request->session()->regenerate();
 		return response()->json('User Logged in', 200);
 	}
