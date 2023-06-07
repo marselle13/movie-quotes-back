@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 	return $request->user();
 });
 
-Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
-Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('auth.redirect');
-Route::get('/auth/google/callback', [AuthController::class, 'callbackFromGoogle'])->name('auth.callback');
-Route::post('/resend-link', [VerifyEmailController::class, 'resendLink'])->name('email.resend');
-Route::get('/email/confirmation', [VerifyEmailController::class, 'verifyEmail'])->name('email.verify');
+Route::controller(AuthController::class)->group(function () {
+	Route::post('/register', 'register')->name('auth.register');
+	Route::post('/login', 'login')->name('auth.login')->middleware('checkUser');
+	Route::get('/auth/google/redirect', 'redirectToGoogle')->name('auth.redirect');
+	Route::get('/auth/google/callback', 'callbackFromGoogle')->name('auth.register_google');
+});
+
+Route::controller(VerifyEmailController::class)->group(function () {
+	Route::post('/resend-link', 'resendLink')->name('emails.resend');
+	Route::get('/email/confirmation', 'verifyEmail')->name('emails.verify');
+});
+
+Route::controller(ResetPasswordController::class)->group(function () {
+	Route::post('/reset-password', 'resetPassword')->name('passwords.reset');
+	Route::get('/update-password', 'checkResetUrl')->name('passwords.check-reset');
+	Route::patch('/update-password', 'updatePassword')->name('passwords.update');
+});

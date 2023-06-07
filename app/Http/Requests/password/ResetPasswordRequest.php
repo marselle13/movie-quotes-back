@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\password;
 
+use App\Rules\VerifiedEmail;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class ResendLinkRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
 	/**
 	 * Get the validation rules that apply to the request.
@@ -14,7 +16,7 @@ class ResendLinkRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'uuid' => 'exists:users,uuid',
+			'email' => ['bail', 'required', 'email', Rule::exists('users', 'email'), new VerifiedEmail],
 		];
 	}
 }
