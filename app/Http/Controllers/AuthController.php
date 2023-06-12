@@ -48,7 +48,7 @@ class AuthController extends Controller
 		$google = Socialite::driver('google')->stateless()->userFromToken($accessToken);
 		$user = User::where('email', $google->email)->first();
 		if (!$user) {
-			$user = User::create(['name' => $google->name, 'email'=>$google->email, 'uuid'=> Str::uuid()]);
+			$user = User::create(['name' => $google->name, 'email'=>$google->email, 'uuid'=> Str::uuid(), 'avatar' => $google->avatar, 'google' => true]);
 			$user->markEmailAsVerified();
 		}
 		auth()->login($user);

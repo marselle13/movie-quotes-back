@@ -4,7 +4,6 @@ namespace App\Http\Requests\password;
 
 use App\Rules\VerifiedEmail;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ResetPasswordRequest extends FormRequest
 {
@@ -16,7 +15,7 @@ class ResetPasswordRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'email' => ['bail', 'required', 'email', Rule::exists('users', 'email'), new VerifiedEmail],
+			'email' => ['bail', 'required', 'email', new VerifiedEmail],
 		];
 	}
 }
