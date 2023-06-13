@@ -17,7 +17,7 @@ class VerifiedEmail implements ValidationRule
 	{
 		$user = User::where('email', $value)->first();
 
-		if (!$user || !$user->google) {
+		if (!$user || $user->google) {
 			$fail('no email');
 		} elseif (!$user->hasVerifiedEmail()) {
 			$fail('not verified');
