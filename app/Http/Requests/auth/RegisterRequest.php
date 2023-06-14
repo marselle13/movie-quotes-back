@@ -21,6 +21,19 @@ class RegisterRequest extends FormRequest
 		];
 	}
 
+	/**
+	 * Get the error messages for the defined validation rules.
+	 *
+	 * @return array<string, string>
+	 */
+	public function messages(): array
+	{
+		return [
+			'name.unique'  => ['en' => 'The name has already been taken', 'ka' => 'ასეთი სახელი უკვე რეგისტრირებულია'],
+			'email.unique' => ['en' => 'The email has already been taken', 'ka' => 'ასეთი ელ-ფოსტა უკვე რეგისტრირებულია'],
+		];
+	}
+
 	/*
 	 * Handle a passed validation attempt.
 	 */

@@ -3,7 +3,9 @@
 namespace App\Http\Requests\password;
 
 use App\Rules\VerifiedEmail;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ResetPasswordRequest extends FormRequest
 {
@@ -15,7 +17,19 @@ class ResetPasswordRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'email' => ['bail', 'required', 'email', new VerifiedEmail],
+			'email' => ['bail', 'required', 'email', 'exists:users,email', Rule::exists('users')->where(fn (Builder $query) => $query->where('google', 0)), new VerifiedEmail],
+		];
+	}
+
+	/**
+	 * Get the error messages for the defined validation rules.
+	 *
+	 * @return array<string, string>
+	 */
+	public function messages(): array
+	{
+		return [
+			'email.exists' => ['en' => 'The selected email is invalid', 'ka' => 'ასეთი ემაილი არ არსებობს'],
 		];
 	}
 }

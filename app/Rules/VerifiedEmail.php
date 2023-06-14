@@ -4,23 +4,31 @@ namespace App\Rules;
 
 use App\Models\User;
 use Closure;
-use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Rule;
 
-class VerifiedEmail implements ValidationRule
+class VerifiedEmail implements Rule
 {
-	/**
-	 * Run the validation rule.
-	 *
-	 * @param \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
-	 */
-	public function validate(string $attribute, mixed $value, Closure $fail): void
+	//	/**
+	//	 * Run the validation rule.
+	//	 *
+	//	 * @param \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
+	//	 */
+	//	public function validate(string $attribute, mixed $value, Closure $fail): void
+	//	{
+	//	}
+
+	public function passes($attribute, $value): bool
 	{
 		$user = User::where('email', $value)->first();
 
-		if (!$user || $user->google) {
-			$fail('no email');
-		} elseif (!$user->hasVerifiedEmail()) {
-			$fail('not verified');
+		if (!$user->hasVerifiedEmail()) {
+			return false;
 		}
+		return true;
+	}
+
+	public function message(): array
+	{
+		return ['email' => ['en' => 'The selected email is not verified', 'ka' => 'ეს ელ-ფოსტა არ არის გააქტიურებული']];
 	}
 }

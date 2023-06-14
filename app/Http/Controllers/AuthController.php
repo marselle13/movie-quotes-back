@@ -32,7 +32,7 @@ class AuthController extends Controller
 			$request->session()->regenerate();
 			return response()->json('User Logged in', 200);
 		}
-		return response()->json('Invalid Credentials', 401);
+		return response()->json(['errors' => ['en' => 'Invalid Credentials', 'ka' => 'მოწოდებული მონაცემები არასწორია']], 401);
 	}
 
 	public function redirectToGoogle(): JsonResponse
@@ -50,7 +50,10 @@ class AuthController extends Controller
 		if (!$user) {
 			$user = User::create(['name' => $google->name, 'email'=>$google->email, 'uuid'=> Str::uuid(), 'avatar' => 'avatars/default_avatar.jpg', 'google' => true]);
 			$user->markEmailAsVerified();
+		} elseif (!$user->google) {
+			return response()->json('User already exists', 409);
 		}
+
 		auth()->login($user);
 		$request->session()->regenerate();
 		return response()->json('User Logged in', 200);
