@@ -27,8 +27,7 @@
     </div>
     <div style="display: flex; flex-direction: column; gap: 24px">
         <p>Hola {{ $user->name }}</p>
-        <p>Thanks for joining Movie quotes! We really appreciate it. Please click the button below to verify your
-            account:</p>
+        <p>{{ $info }}</p>
         <a class="verify-button" href="{{$verificationUrl}}">Verify account</a>
         <p>If clicking doesn't work, you can try copying and pasting it to your browser:
         <p style="color:#DDCCAA;word-break: break-all">
