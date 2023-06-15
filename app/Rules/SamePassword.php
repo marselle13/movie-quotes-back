@@ -20,7 +20,7 @@ class SamePassword implements Rule
 
 	public function passes($attribute, $value): bool
 	{
-		$user = User::where('uuid', request('uuid'))->first();
+		$user = User::where('uuid', request('uuid'))->first() ?? auth()->user();
 		if (Hash::check($value, $user->password)) {
 			return false;
 		}
