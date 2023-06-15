@@ -35,6 +35,12 @@ class AuthController extends Controller
 		return response()->json(['errors' => ['en' => 'Invalid Credentials', 'ka' => 'მოწოდებული მონაცემები არასწორია']], 401);
 	}
 
+	public function logout(): JsonResponse
+	{
+		auth()->logout();
+		return response()->json('User Logged out', 200);
+	}
+
 	public function redirectToGoogle(): JsonResponse
 	{
 		$redirectUrl = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();

@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function () {
 	Route::post('/register', 'register')->name('auth.register');
 	Route::post('/login', 'login')->name('auth.login')->middleware('checkUser');
+	Route::get('/logout', 'logout')->name('auth.logout');
 	Route::get('/auth/google/redirect', 'redirectToGoogle')->name('auth.redirect');
 	Route::get('/auth/google/callback', 'callbackFromGoogle')->name('auth.register_google');
 });
