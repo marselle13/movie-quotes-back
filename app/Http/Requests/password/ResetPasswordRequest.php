@@ -17,7 +17,7 @@ class ResetPasswordRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'email' => ['bail', 'required', 'email', 'exists:users,email', Rule::exists('users')->where(fn (Builder $query) => $query->where('google', 0)), new VerifiedEmail],
+			'email' => ['bail', 'required', 'email', 'exists:users,email', Rule::exists('users')->where(fn (Builder $query) => $query->where('registeredWithGoogle', 0)), new VerifiedEmail],
 		];
 	}
 
