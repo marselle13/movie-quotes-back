@@ -30,8 +30,8 @@ class UpdateUserRequest extends FormRequest
 	public function messages(): array
 	{
 		return [
-			'name.unique'  => ['en' => 'The name has already been taken', 'ka' => 'ასეთი სახელი უკვე რეგისტრირებულია'],
-			'email.unique' => ['en' => 'The email has already been taken', 'ka' => 'ასეთი ელ-ფოსტა უკვე რეგისტრირებულია'],
+			'name.unique'  => __('messages.name_registered'),
+			'email.unique' => __('messages.email_registered'),
 		];
 	}
 

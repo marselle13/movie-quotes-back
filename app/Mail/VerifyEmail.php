@@ -10,15 +10,8 @@ class VerifyEmail extends Mailable
 {
 	use Queueable, SerializesModels;
 
-	protected string $info;
-
-	public function __construct(public $user, public $verificationUrl)
+	public function __construct(public $user, public $infoMessage, public $verificationUrl)
 	{
-		if ($this->user->created_at === $this->user->updated_at) {
-			$this->info = 'Thanks for joining Movie quotes! We really appreciate it. Please click the button below to verify your account:';
-		} else {
-			$this->info = 'Your Email Changed Successfully. Please click the button below to verify your account:';
-		}
 	}
 
 	public function build(): Mailable
@@ -27,7 +20,7 @@ class VerifyEmail extends Mailable
 				->view('email.confirmation', [
 					'user'            => $this->user,
 					'verificationUrl' => $this->verificationUrl,
-					'info'            => $this->info,
+					'info'            => $this->infoMessage,
 				]);
 	}
 }

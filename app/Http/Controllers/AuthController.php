@@ -17,7 +17,7 @@ class AuthController extends Controller
 	public function register(RegisterRequest $request): JsonResponse
 	{
 		$user = User::create($request->except('password_confirmation'));
-		SendEmailVerification::dispatch($user);
+		SendEmailVerification::dispatch($user, __('messages.verify'), app()->getLocale());
 		return response()->json(['User created'], 201);
 	}
 
@@ -31,7 +31,7 @@ class AuthController extends Controller
 			$request->session()->regenerate();
 			return response()->json('User Logged in', 200);
 		}
-		return response()->json(['errors' => ['en' => 'Invalid Credentials', 'ka' => 'მოწოდებული მონაცემები არასწორია']], 401);
+		return response()->json(['errors' => __('messages.invalid')], 401);
 	}
 
 	public function logout(): JsonResponse

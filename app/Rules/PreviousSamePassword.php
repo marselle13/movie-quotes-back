@@ -5,9 +5,10 @@ namespace App\Rules;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Hash;
 
-class PreviousSamePassword implements Rule
+class PreviousSamePassword implements ValidationRule
 {
 	/**
 	 * Run the validation rule.
@@ -16,19 +17,9 @@ class PreviousSamePassword implements Rule
 	 */
 	public function validate(string $attribute, mixed $value, Closure $fail): void
 	{
-	}
-
-	public function passes($attribute, $value): bool
-	{
 		$user = User::where('uuid', request('uuid'))->first() ?? auth()->user();
 		if (Hash::check($value, $user->password)) {
-			return false;
+			$fail('messages.previous')->translate();
 		}
-		return true;
-	}
-
-	public function message(): array
-	{
-		return ['password' => ['en' => ' The new password cannot be the same as the current password.', 'ka'=> 'ახალი პაროლი არ უნდა იყოს იგივე რაც ძველი']];
 	}
 }

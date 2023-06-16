@@ -11,14 +11,14 @@ class UserController extends Controller
 	public function update(UpdateUserRequest $request)
 	{
 		$user = auth()->user();
-		$updatedRequest = $request->validated();
+		$updatedRequest = $request->all();
 		if ($request->hasFile('avatar')) {
 			$updatedRequest['avatar'] = $request->file('avatar')->store('avatars');
 			Storage::delete($user->avatar);
 		} elseif ($request->email) {
 			$user->email_verified_at = null;
 			$user->save();
-			SendEmailVerification::dispatch($user);
+			SendEmailVerification::dispatch($user, __('messages.verify_again'), app()->getLocale());
 		}
 		$user->update($updatedRequest);
 

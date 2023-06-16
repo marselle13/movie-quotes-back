@@ -29,7 +29,7 @@ class ResetPasswordRequest extends FormRequest
 	public function messages(): array
 	{
 		return [
-			'email.exists' => ['en' => 'The selected email is invalid', 'ka' => 'ასეთი ემაილი არ არსებობს'],
+			'email.exists' => __('message.email_invalid'),
 		];
 	}
 }
