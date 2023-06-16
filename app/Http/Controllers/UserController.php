@@ -11,7 +11,7 @@ class UserController extends Controller
 	public function update(UpdateUserRequest $request)
 	{
 		$user = auth()->user();
-		$updatedRequest = $request->except('password_confirmation');
+		$updatedRequest = $request->validated();
 		if ($request->hasFile('avatar')) {
 			$updatedRequest['avatar'] = $request->file('avatar')->store('avatars');
 			Storage::delete($user->avatar);

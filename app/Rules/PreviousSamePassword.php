@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
-class SamePassword implements Rule
+class PreviousSamePassword implements Rule
 {
 	/**
 	 * Run the validation rule.
@@ -20,7 +20,7 @@ class SamePassword implements Rule
 
 	public function passes($attribute, $value): bool
 	{
-		$user = User::where('uuid', request('uuid'))->first() ?? auth()->user();
+		$user = User::where('uuid', request('uuid')) ?? auth()->user();
 		if (Hash::check($value, $user->password)) {
 			return false;
 		}

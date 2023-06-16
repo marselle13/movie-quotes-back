@@ -40,10 +40,10 @@ class RegisterRequest extends FormRequest
 	protected function passedValidation(): void
 	{
 		$this->merge([
-			'avatar'   => 'avatars/default_avatar.jpg',
-			'uuid'     => Str::uuid(),
-			'password' => bcrypt($this->password),
-			'google'   => false,
+			'avatar'                 => 'avatars/default_avatar.jpg',
+			'uuid'                   => Str::uuid(),
+			'password'               => bcrypt($this->password),
+			'registeredWithGoogle'   => false,
 		]);
 	}
 }

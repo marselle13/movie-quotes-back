@@ -18,7 +18,7 @@ return new class() extends Migration {
 			$table->string('email')->unique();
 			$table->timestamp('email_verified_at')->nullable();
 			$table->string('password')->nullable();
-			$table->boolean('google');
+			$table->boolean('registeredWithGoogle');
 			$table->rememberToken();
 			$table->timestamps();
 		});

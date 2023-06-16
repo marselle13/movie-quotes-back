@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\SamePassword;
+use App\Rules\PreviousSamePassword;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -18,7 +18,7 @@ class UpdateUserRequest extends FormRequest
 			'avatar'   => 'image|max:2048',
 			'name'     => 'min:3|max:15|lowercase|alpha_num|unique:users,name',
 			'email'    => 'email|unique:users,email',
-			'password' => ['min:3', 'max:15', 'confirmed', new SamePassword],
+			'password' => ['min:3', 'max:15', 'confirmed', new PreviousSamePassword],
 		];
 	}
 
