@@ -20,7 +20,7 @@ class checkVerifiedUser
 		$user = User::where('name', $usernameOrEmail)->orWhere('email', $usernameOrEmail)->first();
 		if ($user && auth()->validate(['email' => $user->email, 'password' => $request->password])) {
 			if (!$user->hasVerifiedEmail()) {
-				return response()->json('Email not Verified', 401);
+				return response()->json(['errors' => ['en' => 'Invalid Credentials', 'ka' => 'მოწოდებული მონაცემები არასწორია']], 401);
 			}
 		}
 		return $next($request);
