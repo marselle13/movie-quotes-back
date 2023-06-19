@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function () {
 	Route::post('/register', 'register')->name('auth.register');
 	Route::post('/login', 'login')->name('auth.login')->middleware('checkUser');
+	Route::get('/logout', 'logout')->name('auth.logout');
 	Route::get('/auth/google/redirect', 'redirectToGoogle')->name('auth.redirect');
 	Route::get('/auth/google/callback', 'callbackFromGoogle')->name('auth.register_google');
 });
@@ -38,3 +40,5 @@ Route::controller(ResetPasswordController::class)->group(function () {
 	Route::get('/update-password', 'checkResetUrl')->name('passwords.check-reset');
 	Route::patch('/update-password', 'updatePassword')->name('passwords.update');
 });
+
+Route::post('/update-user', [UserController::class, 'update'])->name('users.update');

@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\auth\LoginRequest;
 use App\Http\Requests\auth\RegisterRequest;
-use App\Mail\VerifyEmail;
+use App\Jobs\SendEmailVerification;
 use App\Models\User;
 use Google\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -18,7 +17,7 @@ class AuthController extends Controller
 	public function register(RegisterRequest $request): JsonResponse
 	{
 		$user = User::create($request->except('password_confirmation'));
-		Mail::to($user->email)->send(new VerifyEmail($user, VerifyEmailController::generateVerificationUrl($user)));
+		SendEmailVerification::dispatch($user, __('messages.verify'), app()->getLocale());
 		return response()->json(['User created'], 201);
 	}
 
@@ -32,7 +31,13 @@ class AuthController extends Controller
 			$request->session()->regenerate();
 			return response()->json('User Logged in', 200);
 		}
-		return response()->json('Invalid Credentials', 401);
+		return response()->json(['errors' => __('messages.invalid')], 401);
+	}
+
+	public function logout(): JsonResponse
+	{
+		auth()->logout();
+		return response()->json('User Logged out', 200);
 	}
 
 	public function redirectToGoogle(): JsonResponse
@@ -48,9 +53,12 @@ class AuthController extends Controller
 		$google = Socialite::driver('google')->stateless()->userFromToken($accessToken);
 		$user = User::where('email', $google->email)->first();
 		if (!$user) {
-			$user = User::create(['name' => $google->name, 'email'=>$google->email, 'uuid'=> Str::uuid()]);
+			$user = User::create(['name' => $google->name, 'email'=>$google->email, 'uuid'=> Str::uuid(), 'avatar' => 'avatars/default_avatar.jpg', 'registeredWithGoogle' => true]);
 			$user->markEmailAsVerified();
+		} elseif (!$user->registeredWithGoogle) {
+			return response()->json('User already exists', 409);
 		}
+
 		auth()->login($user);
 		$request->session()->regenerate();
 		return response()->json('User Logged in', 200);

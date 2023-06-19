@@ -4,10 +4,11 @@ namespace App\Rules;
 
 use App\Models\User;
 use Closure;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Hash;
 
-class SamePassword implements ValidationRule
+class PreviousSamePassword implements ValidationRule
 {
 	/**
 	 * Run the validation rule.
@@ -16,9 +17,9 @@ class SamePassword implements ValidationRule
 	 */
 	public function validate(string $attribute, mixed $value, Closure $fail): void
 	{
-		$user = User::where('uuid', request('uuid'))->first();
+		$user = User::where('uuid', request('uuid'))->first() ?? auth()->user();
 		if (Hash::check($value, $user->password)) {
-			$fail('Same Password');
+			$fail('messages.previous')->translate();
 		}
 	}
 }

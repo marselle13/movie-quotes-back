@@ -10,10 +10,8 @@ class VerifyEmail extends Mailable
 {
 	use Queueable, SerializesModels;
 
-	public function __construct($user, $verificationUrl)
+	public function __construct(public $user, public $infoMessage, public $verificationUrl)
 	{
-		$this->user = $user;
-		$this->verificationUrl = $verificationUrl;
 	}
 
 	public function build(): Mailable
@@ -22,6 +20,7 @@ class VerifyEmail extends Mailable
 				->view('email.confirmation', [
 					'user'            => $this->user,
 					'verificationUrl' => $this->verificationUrl,
+					'info'            => $this->infoMessage,
 				]);
 	}
 }

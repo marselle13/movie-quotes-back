@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\password\ResetPasswordRequest;
 use App\Http\Requests\password\UpdatePasswordRequest;
-use App\Mail\ResetPasswordMail;
+use App\Jobs\SendPasswordReset;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
@@ -17,7 +16,7 @@ class ResetPasswordController extends Controller
 	{
 		$user = User::where('email', $request->email)->first();
 		$token = Password::createToken($user);
-		Mail::to($user->email)->send(new ResetPasswordMail($user, self::generateResetPasswordUrl($user, $token)));
+		SendPasswordReset::dispatch($user, $token);
 		return response()->json('Reset password link sent', 200);
 	}
 

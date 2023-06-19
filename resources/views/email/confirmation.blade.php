@@ -23,19 +23,18 @@
 <div style="max-width: 1220px; margin: 0 auto">
     <div style="text-align: center">
         <x-quotes-icon/>
-        <h4>Movie Quotes</h4>
+        <h4>{{ __('messages.title') }}</h4>
     </div>
     <div style="display: flex; flex-direction: column; gap: 24px">
         <p>Hola {{ $user->name }}</p>
-        <p>Thanks for joining Movie quotes! We really appreciate it. Please click the button below to verify your
-            account:</p>
-        <a class="verify-button" href="{{$verificationUrl}}">Verify account</a>
-        <p>If clicking doesn't work, you can try copying and pasting it to your browser:
+        <p>{{ $info }}</p>
+        <a class="verify-button" href="{{$verificationUrl}}">{{ __('messages.verify_button') }}</a>
+        <p>{{ __('messages.copy') }} </p>
         <p style="color:#DDCCAA;word-break: break-all">
             {{$verificationUrl}}
         </p>
-        <p>If you have any problems, please contact us: support@moviequotes.ge</p>
-        <p>MovieQuotes Crew</p>
+        <p>{{ __('messages.problem') }}</p>
+        <p>{{ __('messages.crew') }}</p>
     </div>
 </div>
 </body>
