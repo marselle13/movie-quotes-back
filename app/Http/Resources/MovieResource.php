@@ -15,7 +15,12 @@ class MovieResource extends JsonResource
 	public function toArray(Request $request): array
 	{
 		return [
-			$this->id,
+			'id'             => $this->id,
+			'name'           => $this->getTranslations('name'),
+			'year'           => $this->year,
+			'director'       => $this->getTranslations('director'),
+			'description'    => $this->getTranslations('description'),
+			'image'          => $this->image,
 		];
 	}
 }

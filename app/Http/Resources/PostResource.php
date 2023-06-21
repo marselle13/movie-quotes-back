@@ -15,16 +15,14 @@ class PostResource extends JsonResource
 	public function toArray(Request $request): array
 	{
 		return [
+			'id'        => $this->id,
 			'quote'     => $this->getTranslations('quote'),
 			'thumbnail' => $this->thumbnail,
 			'movie'     => [
-				'name' => $this->movie->name,
+				'name' => $this->movie->getTranslations('name'),
 				'year' => $this->movie->year,
 			],
-			'user' => [
-				'name'   => $this->movie->user->name,
-				'avatar' => $this->movie->user->avatar,
-			],
+			'user'      => UserResource::make($this->movie->user)->only(['name', 'avatar']),
 		];
 	}
 }
