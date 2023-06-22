@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\movie;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class MiniMovieResource extends JsonResource
 {
 	/**
 	 * Transform the resource into an array.
@@ -15,9 +15,9 @@ class UserResource extends JsonResource
 	public function toArray(Request $request): array
 	{
 		return [
-			'id'     => $this->id,
-			'avatar' => $this->avatar,
-			'name'   => $this->name,
+			'id'   => $this->id,
+			'name' => $this->getTranslations('name'),
+			'year' => $this->year,
 		];
 	}
 }

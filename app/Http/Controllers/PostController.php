@@ -9,6 +9,6 @@ class PostController extends Controller
 {
 	public function index()
 	{
-		return response()->json(PostResource::collection(Quote::paginate(5)), 200);
+		return response()->json(PostResource::collection(Quote::latest()->paginate(5)), 200);
 	}
 }
