@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class Quote extends Model
@@ -14,6 +15,11 @@ class Quote extends Model
 	protected $fillable = ['quote', 'thumbnail'];
 
 	protected $translatable = ['quote'];
+
+	public function comment(): HasMany
+	{
+		return $this->hasMany(Comment::class);
+	}
 
 	public function movie(): BelongsTo
 	{
