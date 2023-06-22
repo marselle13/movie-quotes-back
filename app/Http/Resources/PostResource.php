@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\comment\CommentResource;
 use App\Http\Resources\movie\MiniMovieResource;
 use App\Http\Resources\user\UserResource;
 use Illuminate\Http\Request;
@@ -17,12 +18,13 @@ class PostResource extends JsonResource
 	public function toArray(Request $request): array
 	{
 		return [
-			'id'        => $this->id,
-			'quote'     => $this->getTranslations('quote'),
-			'thumbnail' => $this->thumbnail,
-			'movie'     => MiniMovieResource::make($this->movie),
-			'user'      => UserResource::make($this->movie->user),
-			'comment'   => CommentResource::collection($this->comment),
+			'id'             => $this->id,
+			'quote'          => $this->getTranslations('quote'),
+			'thumbnail'      => $this->thumbnail,
+			'movie'          => MiniMovieResource::make($this->movie),
+			'user'           => UserResource::make($this->movie->user),
+			'comments'       => CommentResource::collection($this->comment->take(2)),
+			'commentsLength' => $this->comment->count(),
 		];
 	}
 }

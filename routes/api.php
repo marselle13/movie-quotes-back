@@ -46,4 +46,5 @@ Route::post('/update-user', [UserController::class, 'update'])->name('users.upda
 
 Route::controller(PostController::class)->group(function () {
 	Route::get('/posts', 'index')->name('posts.index');
+	Route::get('/posts/{quote}/comments', 'loadComments')->name('posts.comments');
 });
