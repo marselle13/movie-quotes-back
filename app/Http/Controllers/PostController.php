@@ -14,7 +14,7 @@ class PostController extends Controller
 		return response()->json(PostResource::collection(Quote::latest()->paginate(5)), 200);
 	}
 
-	public function loadComments(Quote $quote)
+	public function loadComments(Quote $quote): JsonResponse
 	{
 		return response()->json(CommentResource::collection($quote->comment));
 	}

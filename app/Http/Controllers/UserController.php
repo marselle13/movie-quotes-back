@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Jobs\SendEmailVerification;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-	public function update(UpdateUserRequest $request)
+	public function update(UpdateUserRequest $request): JsonResponse
 	{
 		$updatedRequest = $request->all();
 		$user = auth()->user();

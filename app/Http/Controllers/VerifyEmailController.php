@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\auth\ResendLinkRequest;
+use App\Jobs\SendEmailVerification;
 use App\Mail\VerifyEmail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class VerifyEmailController extends Controller
 {
@@ -33,13 +33,13 @@ class VerifyEmailController extends Controller
 		if ($user->hasVerifiedEmail()) {
 			return response()->json('Email already verified', 409);
 		}
-		Mail::to($user->email)->send(new VerifyEmail($user, self::generateVerificationUrl($user)));
+		SendEmailVerification::dispatch(new VerifyEmail($user, __('messages.verify'), self::generateVerificationUrl($user)));
 		return response()->json('Verification link sent', 200);
 	}
 
 	public static function generateVerificationUrl($user): string
 	{
-		$expiration = Carbon::now()->addHours(env('VERIFY_EMAIL_TIME'))->timestamp;
+		$expiration = Carbon::now()->addHours(env('VERIFY_EMAIL_TIME', 3))->timestamp;
 		return url(env('FRONT_APP') . '?uuid=' . $user->uuid . '&hash=' . sha1($user->email) . '&expires=' . $expiration);
 	}
 }
