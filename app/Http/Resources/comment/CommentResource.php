@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\comment;
 
 use App\Http\Resources\user\UserResource;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class CommentResource extends JsonResource
 	{
 		return [
 			'id'      => $this->id,
-			'comment' => $this->comment,
+			'text'    => $this->text,
 			'user'    => UserResource::make($this->user),
 		];
 	}

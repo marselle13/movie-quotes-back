@@ -10,7 +10,7 @@ class Comment extends Model
 {
 	use HasFactory;
 
-	protected $fillable = ['comment'];
+	protected $fillable = ['text'];
 
 	public function quote(): BelongsTo
 	{
