@@ -8,6 +8,7 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,11 @@ Route::post('/update-user', [UserController::class, 'update'])->name('users.upda
 
 Route::controller(QuoteController::class)->group(function () {
 	Route::get('/quotes', 'index')->name('quotes.index');
+	Route::post('/quotes', 'store')->name('quotes.store');
+});
+
+Route::controller(MovieController::class)->group(function () {
+	Route::get('/movies/list', 'list')->name('movies.list');
 });
 
 Route::get('/posts/{quote}/comments', [CommentController::class, 'show'])->name('comments.show');
