@@ -7,6 +7,7 @@ use App\Http\Controllers\VerifyEmailController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::controller(ResetPasswordController::class)->group(function () {
 Route::post('/update-user', [UserController::class, 'update'])->name('users.update');
 
 Route::controller(QuoteController::class)->group(function () {
-	Route::get('/posts', 'index')->name('posts.index');
-	Route::get('/posts/{quote}/comments', 'loadComments')->name('posts.comments');
+	Route::get('/quotes', 'index')->name('quotes.index');
 });
+
+Route::get('/posts/{quote}/comments', [CommentController::class, 'show'])->name('comments.show');
