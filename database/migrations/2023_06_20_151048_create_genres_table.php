@@ -3,8 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
-use Database\Seeders\GenreSeeder;
 
 return new class extends Migration {
 	/**
@@ -17,8 +15,6 @@ return new class extends Migration {
 			$table->json('name');
 			$table->timestamps();
 		});
-
-		DB::table('genres')->insert(GenreSeeder::getGenres());
 	}
 
 	/**

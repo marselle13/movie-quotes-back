@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Translatable\HasTranslations;
 
 class Genre extends Model
@@ -12,7 +13,7 @@ class Genre extends Model
 
 	protected $translatable = ['name'];
 
-	public function movie()
+	public function movie(): BelongsToMany
 	{
 		return $this->belongsToMany(Movie::class, 'movie_genre');
 	}

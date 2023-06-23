@@ -9,47 +9,47 @@ class GenreSeeder extends Seeder
 	public static function getGenres(): array
 	{
 		$genres = [
-			['name' => json_encode([
+			['id'   => 1, 'name' => json_encode([
 				'en' => 'Animation',
 				'ka' => 'ანიმაცია',
 			]),
 			],
-			['name' => json_encode([
+			['id'   => 2, 'name' => json_encode([
 				'en' => 'Adventure',
 				'ka' => 'სათავგადასავლო',
 			]),
 			],
-			['name' => json_encode([
+			['id'   => 3, 'name' => json_encode([
 				'en' => 'Comedy',
 				'ka' => 'კომედია',
 			]),
 			],
-			['name' => json_encode([
+			['id'   => 4, 'name' => json_encode([
 				'en' => 'Drama',
 				'ka' => 'დრამა',
 			]),
 			],
-			['name' => json_encode([
+			['id'   => 5, 'name' => json_encode([
 				'en' => 'Fantasy',
 				'ka' => 'ფანტასტიკა',
 			]),
 			],
-			['name' => json_encode([
+			['id' => 6, 'name' => json_encode([
 				'en' => 'Horror',
 				'ka' => 'საშინელება',
 			]),
 			],
-			['name' => json_encode([
+			['id' => 7, 'name' => json_encode([
 				'en' => 'Mystery',
 				'ka' => 'მისტიკა',
 			]),
 			],
-			['name' => json_encode([
+			['id' => 8, 'name' => json_encode([
 				'en' => 'Documentary',
 				'ka' => 'დოკუმენტური',
 			]),
 			],
-			['name' => json_encode([
+			['id' => 9, 'name' => json_encode([
 				'en' => 'Sci-Fi',
 				'ka' => 'სამხედრო ფანტასტიკა',
 			]),
