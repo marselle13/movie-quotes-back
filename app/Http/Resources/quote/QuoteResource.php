@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\quote;
 
 use App\Http\Resources\comment\CommentResource;
 use App\Http\Resources\movie\MiniMovieResource;
@@ -8,7 +8,7 @@ use App\Http\Resources\user\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class QuoteResource extends JsonResource
 {
 	/**
 	 * Transform the resource into an array.

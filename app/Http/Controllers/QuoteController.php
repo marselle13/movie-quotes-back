@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\comment\CommentResource;
-use App\Http\Resources\PostResource;
+use App\Http\Resources\quote\QuoteResource;
 use App\Models\Quote;
 use Illuminate\Http\JsonResponse;
 
-class PostController extends Controller
+class QuoteController extends Controller
 {
 	public function index(): JsonResponse
 	{
-		return response()->json(PostResource::collection(Quote::latest()->paginate(5)), 200);
+		return response()->json(QuoteResource::collection(Quote::latest()->paginate(5)), 200);
 	}
 
 	public function loadComments(Quote $quote): JsonResponse
