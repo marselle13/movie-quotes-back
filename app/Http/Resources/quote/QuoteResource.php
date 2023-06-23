@@ -3,6 +3,7 @@
 namespace App\Http\Resources\quote;
 
 use App\Http\Resources\comment\CommentResource;
+use App\Http\Resources\like\LikeResource;
 use App\Http\Resources\movie\MiniMovieResource;
 use App\Http\Resources\user\UserResource;
 use Illuminate\Http\Request;
@@ -24,7 +25,11 @@ class QuoteResource extends JsonResource
 			'movie'          => MiniMovieResource::make($this->movie),
 			'user'           => UserResource::make($this->movie->user),
 			'comments'       => CommentResource::collection($this->comment->take(2)),
-			'commentsLength' => $this->comment->count(),
+			'likes'          => LikeResource::collection($this->like),
+			'length'         => [
+				'comments' => $this->comment->count(),
+				'likes'    => $this->like->count(),
+			],
 		];
 	}
 }

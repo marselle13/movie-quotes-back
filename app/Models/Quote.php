@@ -21,6 +21,11 @@ class Quote extends Model
 		return $this->hasMany(Comment::class);
 	}
 
+	public function like(): HasMany
+	{
+		return $this->hasMany(Like::class);
+	}
+
 	public function movie(): BelongsTo
 	{
 		return $this->belongsTo(Movie::class);
