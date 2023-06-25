@@ -20,4 +20,12 @@ class StoreQuoteRequest extends FormRequest
 			'thumbnail'     => 'required|image',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'quote.en'  => __('messages.quote_exists'),
+			'quote.ka'  => __('messages.quote_exists'),
+		];
+	}
 }
