@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Comment;
 use App\Models\Genre;
 use App\Models\Like;
 use App\Models\Movie;
@@ -29,13 +28,8 @@ class DatabaseSeeder extends Seeder
 				]);
 
 				$quotes->each(function ($quote) use ($user) {
-					Comment::factory(5)->create([
-						'quote_id' => $quote->id,
-						'user_id'  => $user->id,
-					]);
-
 					User::factory(4)->create()->each(function ($user) use ($quote) {
-						Like::factory()->create([
+						Like::create([
 							'quote_id' => $quote->id,
 							'user_id'  => $user->id,
 						]);

@@ -55,4 +55,7 @@ Route::controller(MovieController::class)->group(function () {
 	Route::get('/movies/list', 'list')->name('movies.list');
 });
 
-Route::get('/posts/{quote}/comments', [CommentController::class, 'show'])->name('comments.show');
+Route::controller(CommentController::class)->group(function () {
+	Route::get('/comments/{quote}', 'show')->name('comments.show');
+	Route::post('/comments/{quote}', 'store')->name('comments.store');
+});

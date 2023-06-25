@@ -24,7 +24,7 @@ class QuoteResource extends JsonResource
 			'thumbnail'      => $this->thumbnail,
 			'movie'          => MiniMovieResource::make($this->movie),
 			'user'           => UserResource::make($this->movie->user),
-			'comments'       => CommentResource::collection($this->comment->take(2)),
+			'comments'       => CommentResource::collection($this->comment->reverse()->take(2)),
 			'likes'          => LikeResource::collection($this->like),
 			'length'         => [
 				'comments' => $this->comment->count(),
