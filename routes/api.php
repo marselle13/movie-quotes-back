@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,16 +47,21 @@ Route::controller(ResetPasswordController::class)->group(function () {
 
 Route::post('/update-user', [UserController::class, 'update'])->name('users.update');
 
-Route::controller(QuoteController::class)->group(function () {
+Route::controller(QuoteController::class)->middleware('auth')->group(function () {
 	Route::get('/quotes', 'index')->name('quotes.index');
 	Route::post('/quotes', 'store')->name('quotes.store');
 });
 
-Route::controller(MovieController::class)->group(function () {
+Route::controller(MovieController::class)->middleware('auth')->group(function () {
 	Route::get('/movies/list', 'list')->name('movies.list');
 });
 
-Route::controller(CommentController::class)->group(function () {
+Route::controller(CommentController::class)->middleware('auth')->group(function () {
 	Route::get('/comments/{quote}', 'show')->name('comments.show');
 	Route::post('/comments/{quote}', 'store')->name('comments.store');
+});
+
+Route::controller(LikeController::class)->middleware('auth')->group(function () {
+	Route::post('/likes/{quote}/like', 'store')->name('likes.store');
+	Route::delete('/likes/{quote}/unlike', 'destroy')->name('likes.destroy');
 });

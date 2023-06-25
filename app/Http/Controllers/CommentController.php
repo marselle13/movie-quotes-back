@@ -17,6 +17,6 @@ class CommentController extends Controller
 	public function store(Quote $quote, StoreCommentRequest $request): JsonResponse
 	{
 		$comment = $quote->comment()->create(['user_id' => auth()->id(), 'text' => $request->text]);
-		return response()->json(['message' => 'add new comment', 'newComment' => CommentResource::make($comment)]);
+		return response()->json(['message' => 'User add new comment', 'newComment' => CommentResource::make($comment)]);
 	}
 }
