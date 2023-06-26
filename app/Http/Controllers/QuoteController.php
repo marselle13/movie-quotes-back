@@ -17,6 +17,6 @@ class QuoteController extends Controller
 	public function store(StoreQuoteRequest $request): JsonResponse
 	{
 		$quote = Quote::create([...$request->validated(), 'thumbnail' => $request->file('thumbnail')->store('thumbnails')]);
-		return response()->json(['message' => 'New Quote Created', 'newQuote' => QuoteResource::make(Quote::find($quote->id))], 201);
+		return response()->json(['message' => 'New Quote Created', 'newQuote' => QuoteResource::make($quote)], 201);
 	}
 }
