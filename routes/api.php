@@ -62,6 +62,6 @@ Route::controller(CommentController::class)->middleware('auth')->group(function 
 });
 
 Route::controller(LikeController::class)->middleware('auth')->group(function () {
-	Route::post('/likes/{quote}/like', 'store')->name('likes.store');
-	Route::delete('/likes/{quote}/unlike', 'destroy')->name('likes.destroy');
+	Route::post('/likes/{quote}', 'store')->name('likes.store');
+	Route::delete('/likes/{quote}', 'destroy')->name('likes.destroy');
 });
