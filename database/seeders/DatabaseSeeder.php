@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
 			Movie::factory(2)->create(['user_id' => $user->id])->each(function ($movie) use ($user) {
 				$genres = Genre::all();
 				$randomGenres = $genres->random(rand(1, 3))->pluck('id');
-				$movie->genre()->attach($randomGenres);
+				$movie->genres()->attach($randomGenres);
 
 				$quotes = Quote::factory(3)->create([
 					'movie_id' => $movie->id,
