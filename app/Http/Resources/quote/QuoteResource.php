@@ -24,11 +24,11 @@ class QuoteResource extends JsonResource
 			'thumbnail'      => $this->thumbnail,
 			'movie'          => MiniMovieResource::make($this->movie),
 			'user'           => UserResource::make($this->movie->user),
-			'comments'       => CommentResource::collection($this->comment->reverse()->take(2)),
-			'likes'          => LikeResource::collection($this->like),
+			'comments'       => CommentResource::collection($this->comments->reverse()->take(2)),
+			'likes'          => LikeResource::collection($this->likes),
 			'length'         => [
-				'comments' => $this->comment->count(),
-				'likes'    => $this->like->count(),
+				'comments' => $this->comments->count(),
+				'likes'    => $this->likes->count(),
 			],
 		];
 	}

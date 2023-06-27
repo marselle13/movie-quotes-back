@@ -12,7 +12,7 @@ class CommentController extends Controller
 {
 	public function show(Quote $quote): JsonResponse
 	{
-		return response()->json(CommentResource::collection($quote->comment->reverse()));
+		return response()->json(CommentResource::collection($quote->comments->reverse()));
 	}
 
 	public function store(Quote $quote, StoreCommentRequest $request): JsonResponse

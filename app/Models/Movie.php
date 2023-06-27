@@ -22,12 +22,12 @@ class Movie extends Model
 		return $this->belongsTo(User::class);
 	}
 
-	public function quote(): HasMany
+	public function quotes(): HasMany
 	{
 		return $this->hasMany(Quote::class);
 	}
 
-	public function genre(): BelongsToMany
+	public function genres(): BelongsToMany
 	{
 		return $this->belongsToMany(Genre::class, 'movie_genre');
 	}

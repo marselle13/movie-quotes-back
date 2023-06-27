@@ -13,7 +13,7 @@ class Genre extends Model
 
 	protected $translatable = ['name'];
 
-	public function movie(): BelongsToMany
+	public function movies(): BelongsToMany
 	{
 		return $this->belongsToMany(Movie::class, 'movie_genre');
 	}

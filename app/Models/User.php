@@ -56,12 +56,12 @@ class User extends Authenticatable implements MustVerifyEmail
 		return $this->hasMany(Movie::class);
 	}
 
-	public function comment(): HasMany
+	public function comments(): HasMany
 	{
 		return $this->hasMany(Comment::class);
 	}
 
-	public function like(): HasMany
+	public function likes(): HasMany
 	{
 		return $this->hasMany(Like::class);
 	}

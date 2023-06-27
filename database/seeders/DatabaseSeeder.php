@@ -29,10 +29,7 @@ class DatabaseSeeder extends Seeder
 
 				$quotes->each(function ($quote) use ($user) {
 					User::factory(4)->create()->each(function ($user) use ($quote) {
-						Like::create([
-							'quote_id' => $quote->id,
-							'user_id'  => $user->id,
-						]);
+						Like::create(['quote_id' => $quote->id, 'user_id'  => $user->id]);
 					});
 				});
 			});
