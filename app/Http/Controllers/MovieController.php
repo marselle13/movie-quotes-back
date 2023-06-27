@@ -9,6 +9,6 @@ class MovieController extends Controller
 {
 	public function list(): JsonResponse
 	{
-		return response()->json(MiniMovieResource::collection(auth()->user()->movie));
+		return response()->json(MiniMovieResource::collection(auth()->user()->movies));
 	}
 }
