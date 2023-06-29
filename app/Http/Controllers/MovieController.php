@@ -18,7 +18,7 @@ class MovieController extends Controller
 
 	public function store(StoreMovieRequest $request): JsonResponse
 	{
-		$movie = Movie::create([...$request->except('genres'), 'user_id' => 1, 'image' => $request->file('image')->store('images')]);
+		$movie = Movie::create([...$request->except('genres'), 'user_id' => auth()->user()->id, 'image' => $request->file('image')->store('images')]);
 		collect($request->only('genres')['genres'])->each(fn ($genre) => MovieGenre::create(['genre_id' => $genre, 'movie_id' => $movie->id]));
 
 		return response()->json(['message' => 'New Movie Created', 'newMovie' => MoviesResource::make($movie)]);
