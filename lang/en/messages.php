@@ -10,6 +10,7 @@ return [
 	'name_registered'  => 'The name has already been taken',
 	'email_registered' => 'The email has already been taken',
 	'quote_exists'     => 'Quote already exists',
+	'movie_exists'     => 'Movie already exists',
 	'email_invalid'    => 'The selected email is invalid',
 	'title'            => 'Movie Quotes',
 	'problem'          => 'If you have any problems, please contact us: support@moviequotes.ge',
