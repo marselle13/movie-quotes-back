@@ -10,6 +10,7 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\GenreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,13 +47,15 @@ Route::controller(ResetPasswordController::class)->group(function () {
 });
 
 Route::post('/update-user', [UserController::class, 'update'])->name('users.update');
+Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
 
 Route::controller(QuoteController::class)->middleware('auth')->group(function () {
 	Route::get('/quotes', 'index')->name('quotes.index');
 	Route::post('/quotes', 'store')->name('quotes.store');
 });
 
-Route::controller(MovieController::class)->middleware('auth')->group(function () {
+Route::controller(MovieController::class)->group(function () {
+	Route::get('/movies', 'index')->name('movies.index');
 	Route::get('/movies/list', 'list')->name('movies.list');
 });
 
