@@ -56,8 +56,9 @@ Route::controller(QuoteController::class)->middleware('auth')->group(function ()
 
 Route::controller(MovieController::class)->group(function () {
 	Route::get('/movies', 'index')->name('movies.index');
+	Route::get('/movies/{movie}', 'show')->name('movies.show');
 	Route::post('/movies', 'store')->name('movies.store');
-	Route::get('/movies/list', 'list')->name('movies.list');
+	Route::get('/movies-list', 'list')->name('movies.list');
 });
 
 Route::controller(CommentController::class)->middleware('auth')->group(function () {
