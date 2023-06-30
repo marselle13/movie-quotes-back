@@ -36,4 +36,11 @@ class MovieController extends Controller
 	{
 		return response()->json(MiniMovieResource::collection(auth()->user()->movies()->latest()->get()));
 	}
+
+	public function destroy(Movie $movie): JsonResponse
+	{
+		$this->authorize('delete', $movie);
+		$movie->delete();
+		return response()->json('Movie Deleted Succesfully');
+	}
 }

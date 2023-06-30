@@ -24,5 +24,6 @@ class MoviePolicy
 	 */
 	public function delete(User $user, Movie $movie): bool
 	{
+		return $user->id === $movie->user_id;
 	}
 }

@@ -59,6 +59,7 @@ Route::controller(MovieController::class)->group(function () {
 	Route::get('/movies/{movie}', 'show')->name('movies.show');
 	Route::post('/movies', 'store')->name('movies.store');
 	Route::get('/movies-list', 'list')->name('movies.list');
+	Route::delete('/movies/{movie}', 'destroy')->name('movies.destroy');
 });
 
 Route::controller(CommentController::class)->middleware('auth')->group(function () {
