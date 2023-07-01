@@ -49,9 +49,10 @@ Route::controller(ResetPasswordController::class)->group(function () {
 Route::post('/update-user', [UserController::class, 'update'])->name('users.update');
 Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
 
-Route::controller(QuoteController::class)->middleware('auth')->group(function () {
+Route::controller(QuoteController::class)->group(function () {
 	Route::get('/quotes', 'index')->name('quotes.index');
 	Route::post('/quotes', 'store')->name('quotes.store');
+	Route::delete('/quotes/{quote}', 'destroy')->name('quotes.destroy');
 });
 
 Route::controller(MovieController::class)->group(function () {
