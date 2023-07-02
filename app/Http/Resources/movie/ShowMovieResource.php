@@ -23,7 +23,7 @@ class ShowMovieResource extends JsonResource
 			'description'      => $this->getTranslations('description'),
 			'year'             => $this->year,
 			'image'            => $this->image,
-			'quotes'           => QuoteListResource::collection($this->quotes),
+			'quotes'           => QuoteListResource::collection($this->quotes->reverse()),
 			'genres'           => GenresResource::collection($this->genres),
 		];
 	}
