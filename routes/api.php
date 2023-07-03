@@ -51,7 +51,9 @@ Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
 
 Route::controller(QuoteController::class)->group(function () {
 	Route::get('/quotes', 'index')->name('quotes.index');
+	Route::get('/quotes/{quote}', 'show')->name('quotes.show');
 	Route::post('/quotes', 'store')->name('quotes.store');
+	Route::post('/quotes/{quote}', 'update')->name('quotes.update');
 	Route::delete('/quotes/{quote}', 'destroy')->name('quotes.destroy');
 });
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\movie;
 
 use App\Rules\PreviousSamePassword;
 use Illuminate\Foundation\Http\FormRequest;

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\movie\UpdateMovieRequest;
 use App\Http\Requests\StoreMovieRequest;
-use App\Http\Requests\UpdateMovieRequest;
 use App\Http\Resources\movie\MiniMovieResource;
 use App\Http\Resources\movie\MoviesResource;
 use App\Http\Resources\movie\ShowMovieResource;
@@ -51,13 +51,17 @@ class MovieController extends Controller
 		$movie->update($updateRequest);
 		$movie->genres()->sync($request->only('genres')['genres']);
 
-		return response()->json(['message' => 'Movie Updated Successfully', 'updatedMovie' => ShowMovieResource::make($movie)]);
+		return response()->json(['message' => 'Movie Updated Successfully', 'updatedMovieDescription' => ShowMovieResource::make($movie), 'updatedUserMovie' => MoviesResource::make($movie), 'updatedMovieList' => MiniMovieResource::make($movie)]);
 	}
 
 	public function destroy(Movie $movie): JsonResponse
 	{
 		$this->authorize('delete', $movie);
+
 		$movie->delete();
+
+		Storage::delete($movie->image);
+
 		return response()->json('Movie Deleted Successfully');
 	}
 }

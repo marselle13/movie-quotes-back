@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\movie;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -15,8 +15,8 @@ class UpdateMovieRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'name.en'             => ['required', Rule::unique('movies', 'name->en')->ignore($this->movie->id)],
-			'name.ka'             => ['required', Rule::unique('movies', 'name->ka')->ignore($this->movie->id)],
+			'name.en'             => ['required', Rule::unique('movies', 'name->en')->ignore($this->route('movie'))],
+			'name.ka'             => ['required', Rule::unique('movies', 'name->ka')->ignore($this->route('movie'))],
 			'year'                => 'required|date_format:Y',
 			'director.en'         => 'required',
 			'director.ka'         => 'required',

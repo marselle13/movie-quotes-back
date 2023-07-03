@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\movie\UpdateUserRequest;
 use App\Jobs\SendEmailVerification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
