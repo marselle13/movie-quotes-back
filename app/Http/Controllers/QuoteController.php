@@ -43,7 +43,7 @@ class QuoteController extends Controller
 
 		$quote->update($updateRequest);
 
-		return response()->json(['message' => 'Quote Updated Successfully', 'updatedQuote' => QuoteListResource::make($quote)]);
+		return response()->json(['message' => 'Quote Updated Successfully', 'updatedQuote' => QuoteListResource::make($quote)], 200);
 	}
 
 	public function destroy(Quote $quote): JsonResponse
@@ -54,6 +54,6 @@ class QuoteController extends Controller
 
 		Storage::delete($quote->thumbnail);
 
-		return response()->json('Quote deleted successfully!');
+		return response()->json('Quote deleted successfully!', 200);
 	}
 }

@@ -10,6 +10,6 @@ class GenreController extends Controller
 {
 	public function index(): JsonResponse
 	{
-		return response()->json(GenresResource::collection(Genre::all()));
+		return response()->json(GenresResource::collection(Genre::all()), 200);
 	}
 }

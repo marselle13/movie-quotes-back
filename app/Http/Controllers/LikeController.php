@@ -12,7 +12,7 @@ class LikeController extends Controller
 	public function store(Quote $quote): JsonResponse
 	{
 		$like = Like::create(['quote_id' => $quote->id, 'user_id' => auth()->id()]);
-		return response()->json(['message' => 'User Liked Post', 'like' => LikeResource::make($like)]);
+		return response()->json(['message' => 'User Liked Post', 'like' => LikeResource::make($like)], 201);
 	}
 
 	public function destroy(Quote $quote): JsonResponse
@@ -20,6 +20,6 @@ class LikeController extends Controller
 		$like = Like::where('user_id', auth()->id())->first();
 
 		$like->delete();
-		return response()->json(['message' => 'User Unliked Post']);
+		return response()->json(['message' => 'User Unliked Post'], 200);
 	}
 }
