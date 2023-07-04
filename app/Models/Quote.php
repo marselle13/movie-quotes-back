@@ -30,4 +30,16 @@ class Quote extends Model
 	{
 		return $this->belongsTo(Movie::class);
 	}
+
+	public function scopeSearchFilter($query)
+	{
+		$locale = app()->getLocale();
+		$movieSearch = strtolower(request()->query('movie_search'));
+		$quoteSearch = strtolower(request()->query('quote_search'));
+		if ($movieSearch) {
+			$query->whereHas('movie', fn ($query) => $query->whereRaw('LOWER(name->"$.' . $locale . '") LIKE ?', ["%$movieSearch%"]));
+		} elseif ($quoteSearch) {
+			$query->whereRaw('LOWER(quote->"$.' . $locale . '") LIKE ?', ["%$quoteSearch%"]);
+		}
+	}
 }
