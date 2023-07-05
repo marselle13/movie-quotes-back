@@ -36,10 +36,15 @@ class Quote extends Model
 		$locale = app()->getLocale();
 		$movieSearch = strtolower(request()->query('movie_search'));
 		$quoteSearch = strtolower(request()->query('quote_search'));
+		$search = strtolower(request()->query('search'));
+
 		if ($movieSearch) {
 			$query->whereHas('movie', fn ($query) => $query->whereRaw('LOWER(name->"$.' . $locale . '") LIKE ?', ["%$movieSearch%"]));
 		} elseif ($quoteSearch) {
 			$query->whereRaw('LOWER(quote->"$.' . $locale . '") LIKE ?', ["%$quoteSearch%"]);
+		} elseif ($search) {
+			$query->whereRaw('LOWER(quote->"$.' . $locale . '") LIKE ?', ["%$search%"])
+			->orWhereHas('movie', fn ($query) => $query->whereRaw('LOWER(name->"$.' . $locale . '") LIKE ?', ["%$search%"]));
 		}
 	}
 }
