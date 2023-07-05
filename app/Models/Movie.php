@@ -13,9 +13,9 @@ class Movie extends Model
 {
 	use HasFactory,HasTranslations;
 
-	protected $translatable = ['name', 'director', 'description'];
+	protected $fillable = ['user_id', 'name', 'year', 'director', 'description', 'image'];
 
-	protected $fillable = ['name', 'year', 'director', 'description', 'image'];
+	protected $translatable = ['name', 'director', 'description'];
 
 	public function user(): BelongsTo
 	{
@@ -29,6 +29,6 @@ class Movie extends Model
 
 	public function genres(): BelongsToMany
 	{
-		return $this->belongsToMany(Genre::class, 'movie_genre');
+		return $this->belongsToMany(Genre::class, 'movie_genres');
 	}
 }

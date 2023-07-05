@@ -36,7 +36,7 @@ class GenreSeeder extends Seeder
 			],
 			['id' => 6, 'name' => json_encode([
 				'en' => 'Horror',
-				'ka' => 'საშინელება',
+				'ka' => 'საშინელებათა',
 			]),
 			],
 			['id' => 7, 'name' => json_encode([
@@ -51,7 +51,7 @@ class GenreSeeder extends Seeder
 			],
 			['id' => 9, 'name' => json_encode([
 				'en' => 'Sci-Fi',
-				'ka' => 'სამხედრო ფანტასტიკა',
+				'ka' => 'სამეცნიერო ფანტასტიკა',
 			]),
 			],
 		];

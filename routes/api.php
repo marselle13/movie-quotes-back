@@ -10,6 +10,7 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\GenreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,14 +47,23 @@ Route::controller(ResetPasswordController::class)->group(function () {
 });
 
 Route::post('/update-user', [UserController::class, 'update'])->name('users.update');
+Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
 
-Route::controller(QuoteController::class)->middleware('auth')->group(function () {
+Route::controller(QuoteController::class)->group(function () {
 	Route::get('/quotes', 'index')->name('quotes.index');
+	Route::get('/quotes/{quote}', 'show')->name('quotes.show');
 	Route::post('/quotes', 'store')->name('quotes.store');
+	Route::post('/quotes/{quote}', 'update')->name('quotes.update');
+	Route::delete('/quotes/{quote}', 'destroy')->name('quotes.destroy');
 });
 
-Route::controller(MovieController::class)->middleware('auth')->group(function () {
-	Route::get('/movies/list', 'list')->name('movies.list');
+Route::controller(MovieController::class)->group(function () {
+	Route::get('/movies', 'index')->name('movies.index');
+	Route::get('/movies/{movie}', 'show')->name('movies.show');
+	Route::post('/movies', 'store')->name('movies.store');
+	Route::get('/movies-list', 'list')->name('movies.list');
+	Route::post('/movies/{movie}', 'update')->name('movies.update');
+	Route::delete('/movies/{movie}', 'destroy')->name('movies.destroy');
 });
 
 Route::controller(CommentController::class)->middleware('auth')->group(function () {
