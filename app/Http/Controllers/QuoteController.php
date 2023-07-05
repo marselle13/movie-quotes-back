@@ -54,6 +54,6 @@ class QuoteController extends Controller
 
 		Storage::delete($quote->thumbnail);
 
-		return response()->json('Quote deleted successfully!', 200);
+		return response()->json('Quote deleted successfully!', 204);
 	}
 }

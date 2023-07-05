@@ -62,6 +62,6 @@ class MovieController extends Controller
 
 		Storage::delete($movie->image);
 
-		return response()->json('Movie Deleted Successfully', 200);
+		return response()->json('Movie Deleted Successfully', 204);
 	}
 }

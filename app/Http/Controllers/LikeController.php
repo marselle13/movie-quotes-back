@@ -20,6 +20,6 @@ class LikeController extends Controller
 		$like = Like::where('user_id', auth()->id())->first();
 
 		$like->delete();
-		return response()->json(['message' => 'User Unliked Post'], 200);
+		return response()->json(['message' => 'User Unliked Post'], 204);
 	}
 }
