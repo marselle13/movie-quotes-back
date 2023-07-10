@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ReactPost;
 use App\Http\Resources\like\LikeResource;
 use App\Models\Like;
 use App\Models\Quote;
@@ -12,14 +13,20 @@ class LikeController extends Controller
 	public function store(Quote $quote): JsonResponse
 	{
 		$like = Like::create(['quote_id' => $quote->id, 'user_id' => auth()->id()]);
+
+		event(new ReactPost(LikeResource::make($like)));
+
 		return response()->json(['message' => 'User Liked Post', 'like' => LikeResource::make($like)], 201);
 	}
 
-	public function destroy(Quote $quote): JsonResponse
+	public function destroy(): JsonResponse
 	{
 		$like = Like::where('user_id', auth()->id())->first();
 
+		event(new ReactPost(LikeResource::make($like)));
+
 		$like->delete();
+
 		return response()->json(['message' => 'User Unliked Post'], 204);
 	}
 }
