@@ -66,7 +66,7 @@ Route::controller(MovieController::class)->group(function () {
 	Route::delete('/movies/{movie}', 'destroy')->name('movies.destroy');
 });
 
-Route::controller(CommentController::class)->middleware('auth')->group(function () {
+Route::controller(CommentController::class)->middleware(['auth:sanctum'])->group(function () {
 	Route::get('/comments/{quote}', 'show')->name('comments.show');
 	Route::post('/comments/{quote}', 'store')->name('comments.store');
 });
