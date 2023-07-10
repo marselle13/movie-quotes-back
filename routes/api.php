@@ -11,6 +11,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::controller(ResetPasswordController::class)->group(function () {
 
 Route::post('/update-user', [UserController::class, 'update'])->name('users.update');
 Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
 Route::controller(QuoteController::class)->group(function () {
 	Route::get('/quotes', 'index')->name('quotes.index');
