@@ -11,14 +11,20 @@ class Notification extends Model
 	use HasFactory;
 
 	protected $fillable = [
-		'user_id',
-		'quote_id',
+		'to_id',
+		'from_id',
 		'message',
+		'type',
 	];
 
 	public function user(): BelongsTo
 	{
-		return $this->belongsTo(User::class);
+		return $this->belongsTo(User::class, 'to_id');
+	}
+
+	public function from(): BelongsTo
+	{
+		return $this->belongsTo(User::class, 'from_id');
 	}
 
 	public function quote(): BelongsTo

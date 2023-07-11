@@ -12,9 +12,10 @@ return new class extends Migration {
 	{
 		Schema::create('notifications', function (Blueprint $table) {
 			$table->id();
-			$table->foreignId('user_id')->constrained()->cascadeOnDelete();
-			$table->foreignId('quote_id')->constrained()->cascadeOnDelete();
+			$table->foreignId('to_id')->constrained('users')->cascadeOnDelete();
+			$table->foreignId('from_id')->constrained('users')->cascadeOnDelete();
 			$table->string('message');
+			$table->string('type');
 			$table->timestamps();
 		});
 	}

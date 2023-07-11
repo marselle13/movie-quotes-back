@@ -6,7 +6,7 @@ use App\Http\Resources\user\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class NotificationResoruce extends JsonResource
+class NotificationResource extends JsonResource
 {
 	/**
 	 * Transform the resource into an array.
@@ -18,8 +18,9 @@ class NotificationResoruce extends JsonResource
 		return [
 			'id'      => $this->id,
 			'message' => $this->message,
+			'type'    => $this->type,
 			'created' => $this->created_at->diffForHumans(),
-			'user'    => UserResource::make($this->user),
+			'user'    => UserResource::make($this->from),
 		];
 	}
 }
