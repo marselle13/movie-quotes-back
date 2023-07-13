@@ -29,6 +29,6 @@ class SendEmailVerification implements ShouldQueue
 	 */
 	public function handle(): void
 	{
-		Mail::to($this->user->email)->send((new VerifyEmail($this->user, $this->infoMessage, VerifyEmailController::generateVerificationUrl($this->user, $this->newEmail)))->locale($this->locale));
+		Mail::to($this->newEmail ?? $this->user->email)->send((new VerifyEmail($this->user, $this->infoMessage, VerifyEmailController::generateVerificationUrl($this->user, $this->newEmail)))->locale($this->locale));
 	}
 }

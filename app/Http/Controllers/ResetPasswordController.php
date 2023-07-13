@@ -16,7 +16,7 @@ class ResetPasswordController extends Controller
 	{
 		$user = User::where('email', $request->email)->first();
 		$token = Password::createToken($user);
-		SendPasswordReset::dispatch($user, $token);
+		SendPasswordReset::dispatch($user, $token, app()->getLocale());
 		return response()->json('Reset password link sent', 200);
 	}
 
