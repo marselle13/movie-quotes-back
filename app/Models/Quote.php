@@ -31,6 +31,11 @@ class Quote extends Model
 		return $this->belongsTo(Movie::class);
 	}
 
+	public function notifications(): HasMany
+	{
+		return $this->hasMany(Notification::class);
+	}
+
 	public function scopeSearchFilter($query)
 	{
 		$locale = app()->getLocale();
