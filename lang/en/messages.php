@@ -2,7 +2,7 @@
 
 return [
 	'verify'           => 'Thanks for joining Movie quotes! We really appreciate it. Please click the button below to verify your account:',
-	'verify_again'     => 'Your Email changed successfully. Please click the button below to verify your account:',
+	'verify_again'     => 'Your Email change link. Please click the button below to change your email',
 	'copy'             => 'If clicking doesn\'t work, you can try copying and pasting it to your browser:',
 	'invalid'          => 'Invalid Credentials',
 	'previous'         => ' The new password cannot be the same as the current password.',

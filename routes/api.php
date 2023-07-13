@@ -36,9 +36,9 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
 	Route::get('/auth/google/callback', 'callbackFromGoogle')->name('auth.register_google');
 });
 
-Route::controller(VerifyEmailController::class)->middleware('guest')->group(function () {
+Route::controller(VerifyEmailController::class)->group(function () {
 	Route::post('/resend-link', 'resendLink')->name('emails.resend');
-	Route::get('/email/confirmation', 'verifyEmail')->name('emails.verify');
+	Route::get('/email/confirmation', 'verifyOrUpdateEmail')->name('emails.verify');
 });
 
 Route::controller(ResetPasswordController::class)->middleware('guest')->group(function () {
