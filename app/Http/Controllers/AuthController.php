@@ -7,6 +7,7 @@ use App\Http\Requests\auth\RegisterRequest;
 use App\Jobs\SendEmailVerification;
 use App\Models\User;
 use Google\Client;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -29,7 +30,9 @@ class AuthController extends Controller
 		$credentials['password'] = $request->password;
 		if (auth()->attempt($credentials)) {
 			$request->session()->regenerate();
-			return response()->json('User Logged in', 200);
+			$token = auth()->user()->createToken('auth_token', ['authorized'])->plainTextToken;
+			$cookie = Cookie::make('token_expiration', $token, $request->remember ? env('REMEMBER_ME_TIME', 360) : env('EXPIRATION_TIME', 180));
+			return response()->json('User Logged in', 200)->withCookie($cookie);
 		}
 		return response()->json(['errors' => __('messages.invalid')], 401);
 	}

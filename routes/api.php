@@ -24,7 +24,7 @@ use App\Http\Controllers\NotificationController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum', 'token.expiration'])->get('/user', function (Request $request) {
 	return $request->user();
 });
 
