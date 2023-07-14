@@ -1,66 +1,135 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Movie Quotes
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is Movie Quotes Website! platform where users can explore, contribute, and engage with a vast collection of movie quotes in both Georgian and English languages. Whether you're a movie enthusiast or just looking for some memorable lines.
+#
+### Table of Contents
+* [Prerequisites](#prerequisites)
+* [Tech Stack](#tech-stack)
+* [Getting Started](#getting-start)
+* [Migrations](#migration)
+* [Development](#development)
+* [Project Structure](#project-structure)
 
-## About Laravel
+#
+### Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* <img src="readme/assets/php.svg" width="35" style="position: relative; top: 8px" /> *PHP@8.2 and up*
+* <img src="readme/assets/mysql.png" width="35" style="position: relative; top: 8px" /> *MYSQL@8 and up*
+* <img src="readme/assets/npm.png" width="35" style="position: relative; top: 8px" /> *npm@9.6 and up*
+* <img src="readme/assets/composer.png" width="35" style="position: relative; top: 8px" /> *composer@2.6 and up*
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#
+### Tech Stack
+* <img src="readme/assets/laravel.png" height="18" style="position: relative; top: 4px" /> [Laravel@10.x](https://laravel.com/docs/10.x) - back-end framework
+* <img src="readme/assets/tailwind.png" height="18" style="position: relative; top: 4px" /> [tailwind@3.3](https://tailwindcss.com/docs/guides/laravel) - CSS framework
+* <img src="readme/assets/spatie.png" height="19" style="position: relative; top: 4px" /> [Spatie Translatable](https://github.com/spatie/laravel-translatable) - package for translation
+* <img src="readme/assets/pusher.png" height="18" style="position: relative; top: 4px" /> [pusher@8.x](https://pusher.com/docs/) - Real-time event broadcasting and notification system
+* <img src="readme/assets/socialite.jpg" height="18" style="position: relative; top: 4px" /> [Laravel Socialite@5.6](https://laravel.com/docs/10.x/socialite) - OAuth authentication library for integrating with social media platforms
+* <img src="readme/assets/sanctum.png" height="18" style="position: relative; top: 4px" /> [Laravel Sanctum@3.2](https://laravel.com/docs/10.x/sanctum) - Laravel package for API authentication via API tokens
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#
+### Getting Start
 
-## Learning Laravel
+1\. First of all you need to clone Movie Quote app repository from github:
+```sh
+git clone git@github.com:RedberryInternship/nikoloz-gogua-movie-quotes-back.git
+```
+2\. Next step requires you to run *composer install* in order to install all the dependencies.
+```sh
+composer install
+```
+3\. after you have installed all the PHP dependencies, it's time to install all the JS dependencies:
+```sh
+npm install
+```
+4\. Now we need to set our env file. Go to the root of your project and execute this command.
+```sh
+cp .env.example .env
+```
+And now you should provide **.env** file all the necessary environment variables:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5\. Create link for storage:
+```sh
+php artisan storage:link
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#
+**MYSQL:**
+>DB_CONNECTION=mysql
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+>DB_HOST=127.0.0.1
 
-## Laravel Sponsors
+>DB_PORT=3306
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+>DB_DATABASE=*****
 
-### Premium Partners
+>DB_USERNAME=*****
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+>DB_PASSWORD=*****
+ 
+**PUSHER:**
+>BROADCAST_DRIVER=pusher
 
-## Contributing
+>PUSHER_APP_ID=****
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+>PUSHER_APP_KEY=****
 
-## Code of Conduct
+>PUSHER_APP_SECRET=****
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+>PUSHER_PORT=443
 
-## Security Vulnerabilities
+>PUSHER_SCHEME=https
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+>PUSHER_APP_CLUSTER=****
 
-## License
+**Google Oauth:**
+>GOOGLE_CLIENT_ID=******
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+>GOOGLE_CLIENT_SECRET=******
+
+>GOOGLE_REDIRECT_URI=******
+
+
+after setting up **.env** file, execute:
+```sh
+  php artisan key:generate
+```
+in order to generate auth key.
+
+##### Now, you should be good to go!
+
+#
+### Migration
+if you've completed getting started section, then migrating database if fairly simple process, just execute:
+```sh
+php artisan migrate
+```
+
+#
+### Development
+
+You can run Laravel's built-in development server by executing:
+
+```sh
+  php artisan serve
+```
+
+then run vite config:
+
+```sh
+  npm run dev
+```
+it builds css files into executable scripts.
+
+insert genres into database:
+
+```sh
+  php artisan insert:genres
+```
+
+#
+### Project Structure
+
+[Database Design Diagram](https://drawsql.app/teams/nikas-team-2/diagrams/movie-quote-app "Draw.io")
+
+![drawsql](./readme/assets/drawsql.png)
