@@ -20,4 +20,12 @@ class UpdateQuoteRequest extends FormRequest
 			'thumbnail' => 'image',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'quote.en'  => __('messages.quote_exists'),
+			'quote.ka'  => __('messages.quote_exists'),
+		];
+	}
 }
