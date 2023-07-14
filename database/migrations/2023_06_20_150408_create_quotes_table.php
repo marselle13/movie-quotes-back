@@ -13,7 +13,7 @@ return new class extends Migration {
 		Schema::create('quotes', function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('movie_id')->constrained()->cascadeOnDelete();
-			$table->json('quote');
+			$table->json('quote')->unique();
 			$table->string('thumbnail');
 			$table->timestamps();
 		});

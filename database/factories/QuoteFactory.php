@@ -26,7 +26,7 @@ class QuoteFactory extends Factory
 		Storage::put($imagePath, $content);
 
 		return [
-			'quote'           => ['en' => fake()->realText, 'ka' =>  $fakerKa->realText],
+			'quote'           => ['en' => fake()->unique()->realText, 'ka' =>  $fakerKa->unique()->realText],
 			'thumbnail'       => $imagePath,
 		];
 	}
