@@ -29,9 +29,11 @@ class LikeController extends Controller
 		return response()->json(['message' => 'User Liked Post', 'like' => LikeResource::make($like)], 201);
 	}
 
-	public function destroy(): JsonResponse
+	public function destroy(Quote $quote): JsonResponse
 	{
-		$like = Like::where('user_id', auth()->id())->first();
+		$like = Like::where('user_id', auth()->id())
+			->where('quote_id', $quote->id)
+			->first();
 
 		event(new ReactPost(LikeResource::make($like)));
 
