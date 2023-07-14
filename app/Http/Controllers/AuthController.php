@@ -31,7 +31,7 @@ class AuthController extends Controller
 		if (auth()->attempt($credentials)) {
 			$request->session()->regenerate();
 			$token = auth()->user()->createToken('auth_token', ['authorized'])->plainTextToken;
-			$cookie = Cookie::make('token_expiration', $token, $request->remember ? env('REMEMBER_ME_TIME', 360) : env('EXPIRATION_TIME', 180));
+			$cookie = Cookie::make('token_expiration', $token, $request->remember ? config('expiration.remember_me_time') : config('expiration.expiration_time'));
 			return response()->json('User Logged in', 200)->withCookie($cookie);
 		}
 		return response()->json(['errors' => __('messages.invalid')], 401);

@@ -27,8 +27,4 @@ class UserController extends Controller
 
 		return response()->json(['message'=> 'User data updated successfully', 'user' => $user], 200);
 	}
-
-	public function updateEmail()
-	{
-	}
 }
