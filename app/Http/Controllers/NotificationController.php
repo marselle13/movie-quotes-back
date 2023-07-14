@@ -16,6 +16,8 @@ class NotificationController extends Controller
 
 	public function update(Notification $notification): JsonResponse
 	{
+		$this->authorize('update', $notification);
+
 		$notification->update(['type' => NotificationType::SEEN->value]);
 
 		return response()->json(['Notification Seen', 'updatedNotification' =>NotificationResource::make($notification)]);
