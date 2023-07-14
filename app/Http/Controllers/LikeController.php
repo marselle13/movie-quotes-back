@@ -31,14 +31,16 @@ class LikeController extends Controller
 
 	public function destroy(Quote $quote): JsonResponse
 	{
-		$like = Like::where('user_id', auth()->id())
-			->where('quote_id', $quote->id)
+		$like = $quote->likes()
+			->where('user_id', auth()->id())
 			->first();
 
-		event(new ReactPost(LikeResource::make($like)));
+		if ($like) {
+			event(new ReactPost(LikeResource::make($like)));
 
-		$like->delete();
-
-		return response()->json(['message' => 'User Unliked Post'], 204);
+			$like->delete();
+			return response()->json(['message' => 'User Unliked Post'], 204);
+		}
+		return response()->json(['message' => 'Like not found for the quote'], 400);
 	}
 }
