@@ -40,6 +40,6 @@ class ResetPasswordController extends Controller
 
 	public static function generateResetPasswordUrl($user, $token): string
 	{
-		return url(env('FRONT_APP') . '/update-password?uuid=' . $user->uuid . '&token=' . $token);
+		return url(config('custom.front_app') . '/update-password?uuid=' . $user->uuid . '&token=' . $token);
 	}
 }

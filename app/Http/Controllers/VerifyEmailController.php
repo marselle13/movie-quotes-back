@@ -44,7 +44,7 @@ class VerifyEmailController extends Controller
 
 	public static function generateVerificationUrl($user, $newEmail = null): string
 	{
-		$expiration = Carbon::now()->addHours(config('expiration.verify_email_time'))->timestamp;
-		return url(env('FRONT_APP') . ($newEmail ? '/profile' : '') . '?uuid=' . $user->uuid . '&hash=' . sha1($user->email) . '&expires=' . $expiration . ($newEmail ? '&newEmail=' . $newEmail : ''));
+		$expiration = Carbon::now()->addHours(config('custom.verify_email_time'))->timestamp;
+		return url(config('custom.front_app') . ($newEmail ? '/profile' : '') . '?uuid=' . $user->uuid . '&hash=' . sha1($user->email) . '&expires=' . $expiration . ($newEmail ? '&newEmail=' . $newEmail : ''));
 	}
 }
