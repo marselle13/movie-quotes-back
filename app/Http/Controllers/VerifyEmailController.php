@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\auth\ResendLinkRequest;
 use App\Jobs\SendEmailVerification;
-use App\Mail\VerifyEmail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -32,13 +30,14 @@ class VerifyEmailController extends Controller
 		return response()->json('User Verified Successfully', 200);
 	}
 
-	public function resendLink(ResendLinkRequest $request): JsonResponse
+	public function resendLink(Request $request): JsonResponse
 	{
-		$user = User::where('uuid', $request->validated())->first();
+		$user = User::where('uuid', $request->uuid)->first();
 		if ($user->hasVerifiedEmail()) {
 			return response()->json('Email already verified', 409);
 		}
-		SendEmailVerification::dispatch(new VerifyEmail($user, __('messages.verify'), self::generateVerificationUrl($user)));
+
+		SendEmailVerification::dispatch($user, __('messages.verify'), app()->getLocale());
 		return response()->json('Verification link sent', 200);
 	}
 
