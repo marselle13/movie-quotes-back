@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,12 +19,18 @@ class MovieFactory extends Factory
 	{
 		$fakerKa = \Faker\Factory::create('ka_GE');
 
+		$imagePath = 'images/' . uniqid() . '.png';
+		$imageUrl = fake()->image();
+
+		$content = file_get_contents($imageUrl);
+		Storage::put($imagePath, $content);
+
 		return [
 			'name'        => ['en' => fake()->unique()->realText(10), 'ka' =>  $fakerKa->unique()->realText(10)],
 			'year'        => fake()->year,
 			'director'    => ['en' => fake()->name, 'ka' => $fakerKa->name],
 			'description' => ['en' => fake()->realText, 'ka' =>  $fakerKa->realText],
-			'image'       => fake()->imageUrl,
+			'image'       => $imagePath,
 		];
 	}
 }

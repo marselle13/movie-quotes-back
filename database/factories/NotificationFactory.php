@@ -17,8 +17,13 @@ class NotificationFactory extends Factory
 	 */
 	public function definition(): array
 	{
+		$message = collect([
+			NotificationType::LIKE->value,
+			NotificationType::COMMENT->value,
+		]);
+
 		return [
-			'message'        => NotificationType::LIKE->value,
+			'message'        => $message->random(),
 			'type'           => NotificationType::NEW->value,
 		];
 	}

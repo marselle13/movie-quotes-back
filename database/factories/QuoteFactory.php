@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Quote>
@@ -18,9 +19,15 @@ class QuoteFactory extends Factory
 	{
 		$fakerKa = \Faker\Factory::create('ka_GE');
 
+		$imagePath = 'thumbnails/' . uniqid() . '.png';
+		$imageUrl = fake()->image();
+
+		$content = file_get_contents($imageUrl);
+		Storage::put($imagePath, $content);
+
 		return [
 			'quote'           => ['en' => fake()->realText, 'ka' =>  $fakerKa->realText],
-			'thumbnail'       => fake()->imageUrl,
+			'thumbnail'       => $imagePath,
 		];
 	}
 }
