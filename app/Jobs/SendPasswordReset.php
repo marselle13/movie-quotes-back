@@ -18,7 +18,7 @@ class SendPasswordReset implements ShouldQueue
 	/**
 	 * Create a new job instance.
 	 */
-	public function __construct(public $user, public $token)
+	public function __construct(public $user, public $token, public $locale)
 	{
 	}
 
@@ -27,6 +27,6 @@ class SendPasswordReset implements ShouldQueue
 	 */
 	public function handle(): void
 	{
-		Mail::to($this->user->email)->send(new ResetPasswordMail($this->user, ResetPasswordController::generateResetPasswordUrl($this->user, $this->token)));
+		Mail::to($this->user->email)->send((new ResetPasswordMail($this->user, ResetPasswordController::generateResetPasswordUrl($this->user, $this->token)))->locale($this->locale));
 	}
 }

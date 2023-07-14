@@ -11,7 +11,7 @@ class UserController extends Controller
 {
 	public function update(UpdateUserRequest $request): JsonResponse
 	{
-		$updatedRequest = $request->all();
+		$updatedRequest = $request->except('email');
 		$user = auth()->user();
 
 		if ($request->hasFile('avatar')) {
@@ -20,9 +20,7 @@ class UserController extends Controller
 		}
 
 		if ($request->email) {
-			$user->email_verified_at = null;
-			$user->save();
-			SendEmailVerification::dispatch($user, __('messages.verify_again'), app()->getLocale());
+			SendEmailVerification::dispatch($user, __('messages.verify_again'), app()->getLocale(), $request->email);
 		}
 
 		$user->update($updatedRequest);

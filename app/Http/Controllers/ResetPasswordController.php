@@ -16,7 +16,7 @@ class ResetPasswordController extends Controller
 	{
 		$user = User::where('email', $request->email)->first();
 		$token = Password::createToken($user);
-		SendPasswordReset::dispatch($user, $token);
+		SendPasswordReset::dispatch($user, $token, app()->getLocale());
 		return response()->json('Reset password link sent', 200);
 	}
 
@@ -40,6 +40,6 @@ class ResetPasswordController extends Controller
 
 	public static function generateResetPasswordUrl($user, $token): string
 	{
-		return url(env('FRONT_APP') . '/update-password?uuid=' . $user->uuid . '&token=' . $token);
+		return url(config('custom.front_app') . '/update-password?uuid=' . $user->uuid . '&token=' . $token);
 	}
 }

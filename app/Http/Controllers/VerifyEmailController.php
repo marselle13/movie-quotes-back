@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class VerifyEmailController extends Controller
 {
-	public function verifyEmail(Request $request): JsonResponse
+	public function verifyOrUpdateEmail(Request $request): JsonResponse
 	{
 		$user = User::where('uuid', $request->uuid)->first();
 		if (!$user || $request->hash !== sha1($user->email)) {
@@ -23,7 +23,12 @@ class VerifyEmailController extends Controller
 		if ($isExpired) {
 			return response()->json('Token has expired', 410);
 		}
-		$user->markEmailAsVerified();
+		if ($user->hasVerifiedEmail()) {
+			$user->update($request->only('email'));
+			return response()->json(['User Email Updated Successfully', 'updatedEmail' => $user->email], 200);
+		} else {
+			$user->markEmailAsVerified();
+		}
 		return response()->json('User Verified Successfully', 200);
 	}
 
@@ -37,9 +42,9 @@ class VerifyEmailController extends Controller
 		return response()->json('Verification link sent', 200);
 	}
 
-	public static function generateVerificationUrl($user): string
+	public static function generateVerificationUrl($user, $newEmail = null): string
 	{
-		$expiration = Carbon::now()->addHours(env('VERIFY_EMAIL_TIME', 3))->timestamp;
-		return url(env('FRONT_APP') . '?uuid=' . $user->uuid . '&hash=' . sha1($user->email) . '&expires=' . $expiration);
+		$expiration = Carbon::now()->addHours(config('custom.verify_email_time'))->timestamp;
+		return url(config('custom.front_app') . ($newEmail ? '/profile' : '') . '?uuid=' . $user->uuid . '&hash=' . sha1($user->email) . '&expires=' . $expiration . ($newEmail ? '&newEmail=' . $newEmail : ''));
 	}
 }
