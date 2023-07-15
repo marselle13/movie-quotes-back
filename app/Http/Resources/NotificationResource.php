@@ -15,11 +15,16 @@ class NotificationResource extends JsonResource
 	 */
 	public function toArray(Request $request): array
 	{
+		$created = [
+			'en' => $this->created_at->locale('en')->diffForHumans(),
+			'ka' => $this->created_at->locale('ka')->diffForHumans(),
+		];
+
 		return [
 			'id'      => $this->id,
 			'message' => $this->message,
 			'type'    => $this->type,
-			'created' => $this->created_at->diffForHumans(),
+			'created' => $created,
 			'user'    => UserResource::make($this->from),
 		];
 	}
