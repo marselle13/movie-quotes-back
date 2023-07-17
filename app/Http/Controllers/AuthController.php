@@ -39,6 +39,7 @@ class AuthController extends Controller
 
 	public function logout(): JsonResponse
 	{
+		auth()->user()->tokens()->delete();
 		auth()->logout();
 		return response()->json('User Logged out', 200);
 	}
@@ -63,8 +64,10 @@ class AuthController extends Controller
 		}
 
 		auth()->login($user);
+		$token = auth()->user()->createToken('auth_token', ['authorized'])->plainTextToken;
+		$cookie = Cookie::make('token_expiration', $token, config('custom.expiration_time'));
 		$request->session()->regenerate();
-		return response()->json('User Logged in', 200);
+		return response()->json('User Logged in', 200)->withCookie($cookie);
 	}
 
 	private function getGoogleAccessToken($authorizationCode): string

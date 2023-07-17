@@ -15,8 +15,6 @@ class SendEmailVerification implements ShouldQueue
 {
 	use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-	protected string $info;
-
 	/**
 	 * Create a new job instance.
 	 */

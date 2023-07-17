@@ -29,7 +29,7 @@ class ResetPasswordRequest extends FormRequest
 	public function messages(): array
 	{
 		return [
-			'email.exists' => __('message.email_invalid'),
+			'email.exists' => __('messages.email_invalid'),
 		];
 	}
 }

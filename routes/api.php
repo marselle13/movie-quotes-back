@@ -78,7 +78,7 @@ Route::controller(LikeController::class)->middleware(['auth:sanctum'])->group(fu
 });
 
 Route::controller(NotificationController::class)->middleware(['auth:sanctum'])->group(function () {
-	Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
-	Route::patch('/notifications', [NotificationController::class, 'updateAll'])->name('notifications.update-all');
-	Route::patch('/notifications/{notification}', [NotificationController::class, 'update'])->name('notifications.update');
+	Route::get('/notifications', 'index')->name('notifications.index');
+	Route::patch('/notifications', 'updateAll')->name('notifications.update-all');
+	Route::patch('/notifications/{notification}', 'update')->name('notifications.update');
 });
