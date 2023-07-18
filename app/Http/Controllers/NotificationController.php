@@ -28,11 +28,7 @@ class NotificationController extends Controller
 		$notifications = auth()->user()->notifications()
 			->where('type', NotificationType::NEW->value)
 			->latest()
-			->get();
-
-		$notifications->each(
-			fn ($notification) => $notification->update(['type' => NotificationType::SEEN->value])
-		);
+			->update(['type' => NotificationType::SEEN->value]);
 
 		return response()->json('All Notifications Seen', 200);
 	}
