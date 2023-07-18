@@ -8,7 +8,6 @@
             border-radius: 4px;
             border: none;
             padding: 7px 13px;
-            color: #ffffff;
             cursor: pointer;
             width: 128px;
             text-align: center;
@@ -18,23 +17,24 @@
 
 </head>
 <html lang="en"
-      style="font-family:sans-serif; background: linear-gradient(187.16deg, #181623 0.07%, #191725 51.65%, #0D0B14 98.75%); color:white;display: grid;justify-content: center ; align-content: center">
-<body>
-<div style="max-width: 1220px; margin: 0 auto">
-    <div style="text-align: center">
-        <x-quotes-icon/>
+      style="font-family:sans-serif;">
+<body
+    style="width: 100%; height: 100%;  background: #181623">
+<div style="max-width: 1220px; margin: auto auto; padding-top:2.5rem; padding-bottom: 6rem ">
+    <div style="text-align: center; color: white; margin-bottom: 4.5rem ">
+        <img src="{{ asset('quote.png') }}" alt="quote">
         <h4>{{ __('messages.title') }}</h4>
     </div>
-    <div style="display: flex; flex-direction: column; gap: 24px">
-        <p>Hola {{ $user->name }}</p>
-        <p>{{ $info }}</p>
-        <a class="verify-button" href="{{$verificationUrl}}">{{ __('messages.verify_button') }}</a>
-        <p>{{ __('messages.copy') }} </p>
-        <p style="color:#DDCCAA;word-break: break-all">
+    <div>
+        <p style="color:white;margin-bottom: 1.5rem">Hola {{ $user->name }}</p>
+        <p style="color:white;margin-bottom: 2rem">{{ $info }}</p>
+        <a style="color:white;" class="verify-button" href="{{$verificationUrl}}">{{ __('messages.verify_button') }}</a>
+        <p style="color:white; margin-top: 2.5rem; margin-bottom: 1.5rem">{{ __('messages.copy') }} </p>
+        <p style="color:#DDCCAA; word-break: break-all ; margin-bottom: 1.5rem">
             {{$verificationUrl}}
         </p>
-        <p>{{ __('messages.problem') }}</p>
-        <p>{{ __('messages.crew') }}</p>
+        <p style="color:white ;margin-bottom: 1.5rem">{{ __('messages.problem') }}</p>
+        <p style="color:white ;margin-bottom: 1.5rem">{{ __('messages.crew') }}</p>
     </div>
 </div>
 </body>
