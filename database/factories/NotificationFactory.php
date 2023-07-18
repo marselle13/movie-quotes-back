@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\NotificationMessage;
 use App\Enums\NotificationType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,8 +19,8 @@ class NotificationFactory extends Factory
 	public function definition(): array
 	{
 		$message = collect([
-			NotificationType::LIKE->value,
-			NotificationType::COMMENT->value,
+			NotificationMessage::LIKE->value,
+			NotificationMessage::COMMENT->value,
 		]);
 
 		return [
