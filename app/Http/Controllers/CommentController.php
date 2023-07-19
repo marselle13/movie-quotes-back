@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\NotificationMessage;
 use App\Enums\NotificationType;
 use App\Events\CommentSent;
 use App\Events\NotificationSent;
@@ -25,7 +26,7 @@ class CommentController extends Controller
 		$comment = Comment::create([...$request->validated(), 'quote_id' => $quote->id, 'user_id' => auth()->id()]);
 		event(new CommentSent(CommentResource::make($comment)));
 		if ($quote->movie->user_id !== auth()->id()) {
-			$notification = Notification::create(['to_id' => $quote->movie->user_id, 'from_id' => auth()->id(), 'message' => NotificationType::COMMENT->value, 'type'  => NotificationType::NEW->value]);
+			$notification = Notification::create(['to_id' => $quote->movie->user_id, 'from_id' => auth()->id(), 'message' => NotificationMessage::COMMENT->value, 'type'  => NotificationType::NEW->value]);
 
 			event(new NotificationSent(NotificationResource::make($notification), $notification->to_id));
 		}
